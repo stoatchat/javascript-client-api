@@ -33,37 +33,38 @@ jobs:
           message: "chore: build library from latest spec [skip ci]"
 
       - name: Find current API version
-        run: echo "api_version=$(jq -r .info.version OpenAPI.json)" >> $GITHUB_ENV
+        id: check-api
+        run: echo "api-version=$(jq -r .info.version OpenAPI.json)" >> $GITHUB_OUTPUT
 
       - name: Check if tag exists for current version
-        uses: mukunku/tag-exists-action@v1.2.0
-        id: checkTag
+        uses: mukunku/tag-exists-action@v1.6.0
+        id: check-tag
         with:
-          tag: ${{ env.api_version }}
+          tag: ${{ steps.check-api.outputs.api-version }}
 
       - name: Update version in package.json
-        if: ${{ steps.checkTag.outputs.exists }} != true
+        if: steps.check-tag.outputs.exists == 'false'
         run: |
-          jq '.version="${{ env.api_version }}"' package.json > temp.json
+          jq '.version="${{ steps.check-api.outputs.api-version }}"' package.json > temp.json
           mv temp.json package.json
 
       - name: Commit changes
-        if: ${{ steps.checkTag.outputs.exists }} != true
+        if: steps.check-tag.outputs.exists == 'false'
         uses: EndBug/add-and-commit@v9
         with:
           author_name: Stoat CI
           author_email: stoat-ci@users.noreply.github.com
-          tag: "${{ env.api_version }} --force"
-          message: "chore: bump version to ${{ env.api_version }} [skip ci]"
+          tag: "${{ steps.check-api.outputs.api-version }} --force"
+          message: "chore: bump version to ${{ steps.check-api.outputs.api-version }} [skip ci]"
 
-      - name: Publish to NPM
-        if: ${{ steps.checkTag.outputs.exists }} != true
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to npm
+        run: npm publish --provenance --ignore-scripts
+        if: steps.check-tag.outputs.exists == 'false'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Checkout stoat.js repository
-        if: ${{ steps.checkTag.outputs.exists }} != true
+        if: steps.check-tag.outputs.exists == 'false'
         uses: actions/checkout@v3
         with:
           repository: stoatchat/javascript-client-sdk
@@ -71,14 +72,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update stoat-api dependency
-        if: ${{ steps.checkTag.outputs.exists }} != true
-        run: cd stoat.js && pnpm add stoat-api@${{ env.api_version }}
+        if: steps.check-tag.outputs.exists == 'false'
+        run: cd stoat.js && pnpm add stoat-api@${{ steps.check-api.outputs.api-version }}
 
       - name: Commit changes
-        if: ${{ steps.checkTag.outputs.exists }} != true
+        if: steps.check-tag.outputs.exists == 'false'
         uses: EndBug/add-and-commit@v4
         with:
           cwd: "stoat.js"
           author_name: Stoat CI
           author_email: stoat-ci@users.noreply.github.com
-          message: "chore: update stoat-api to ${{ env.api_version }}"
+          message: "chore: update stoat-api to ${{ steps.check-api.outputs.api-version }}"

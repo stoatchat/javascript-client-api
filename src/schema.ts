@@ -172,11 +172,15 @@ export interface paths {
     /** Asks the voice server for a token to join the call. */
     post: operations["voice_join_call"];
   };
+  "/channels/{target}/end_ring/{target_user}": {
+    /** Stops ringing a specific user in a dm call. You must be in the call to use this endpoint, returns NotConnected otherwise. Only valid in DM/Group channels, will return NoEffect in servers. Returns NotFound if the user is not in the dm/group channel */
+    put: operations["voice_stop_ring_stop_ring"];
+  };
   "/channels/{target}/permissions/{role_id}": {
     /**
      * Sets permissions for the specified role in this channel.
      *
-     * Channel must be a `TextChannel` or `VoiceChannel`.
+     * Channel must be a `TextChannel`.
      */
     put: operations["permissions_set_set_role_permissions"];
   };
@@ -184,7 +188,7 @@ export interface paths {
     /**
      * Sets permissions for the default role in this channel.
      *
-     * Channel must be a `Group`, `TextChannel` or `VoiceChannel`.
+     * Channel must be a `Group` or `TextChannel`.
      */
     put: operations["permissions_set_default_set_default_channel_permissions"];
   };
@@ -496,7 +500,7 @@ export interface components {
       /** @description Proxy service configuration */
       january: components["schemas"]["Feature"];
       /** @description Voice server configuration */
-      voso: components["schemas"]["VoiceFeature"];
+      livekit: components["schemas"]["VoiceFeature"];
     };
     /** hCaptcha Configuration */
     CaptchaFeature: {
@@ -516,10 +520,17 @@ export interface components {
     VoiceFeature: {
       /** @description Whether voice is enabled */
       enabled: boolean;
-      /** @description URL pointing to the voice API */
-      url: string;
-      /** @description URL pointing to the voice WebSocket server */
-      ws: string;
+      /** @description All livekit nodes */
+      nodes: components["schemas"]["VoiceNode"][];
+    };
+    /** Information about a livekit node */
+    VoiceNode: {
+      name: string;
+      /** Format: double */
+      lat: number;
+      /** Format: double */
+      lon: number;
+      public_url: string;
     };
     /** Build Information */
     BuildInformation: {
@@ -801,6 +812,26 @@ export interface components {
           /** @enum {string} */
           type: "FailedValidation";
           error: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "LiveKitUnavailable";
+        }
+      | {
+          /** @enum {string} */
+          type: "NotAVoiceChannel";
+        }
+      | {
+          /** @enum {string} */
+          type: "AlreadyConnected";
+        }
+      | {
+          /** @enum {string} */
+          type: "NotConnected";
+        }
+      | {
+          /** @enum {string} */
+          type: "UnknownNode";
         }
       | {
           /** @enum {string} */
@@ -1108,28 +1139,8 @@ export interface components {
           };
           /** @description Whether this channel is marked as not safe for work */
           nsfw?: boolean;
-        }
-      | {
-          /** @enum {string} */
-          channel_type: "VoiceChannel";
-          /** @description Unique Id */
-          _id: string;
-          /** @description Id of the server this channel belongs to */
-          server: string;
-          /** @description Display name of the channel */
-          name: string;
-          /** @description Channel description */
-          description?: string | null;
-          /** @description Custom icon attachment */
-          icon?: components["schemas"]["File"] | null;
-          /** @description Default permissions assigned to users in this channel */
-          default_permissions?: components["schemas"]["OverrideField"] | null;
-          /** @description Permissions assigned based on role to this channel */
-          role_permissions?: {
-            [key: string]: components["schemas"]["OverrideField"];
-          };
-          /** @description Whether this channel is marked as not safe for work */
-          nsfw?: boolean;
+          /** @description Voice Information for when this channel is also a voice channel */
+          voice?: components["schemas"]["VoiceInformation"] | null;
         };
     /** @description Representation of a single permission override as it appears on models and in the database */
     OverrideField: {
@@ -1143,6 +1154,14 @@ export interface components {
        * @description Disallow bit flags
        */
       d: number;
+    };
+    /** @description Voice information for a channel */
+    VoiceInformation: {
+      /**
+       * Format: uint
+       * @description Maximium amount of users allowed in the voice channel at once
+       */
+      max_users?: number | null;
     };
     /** @description Mutual friends, servers, groups and DMs response */
     MutualResponse: {
@@ -1300,6 +1319,8 @@ export interface components {
       nsfw?: boolean | null;
       /** @description Whether this channel is archived */
       archived?: boolean | null;
+      /** @description Voice Information for voice channels */
+      voice?: components["schemas"]["VoiceInformation"] | null;
       /**
        * @description Fields to remove from channel
        * @default []
@@ -1310,7 +1331,7 @@ export interface components {
      * @description Optional fields on channel object
      * @enum {string}
      */
-    FieldsChannel: "Description" | "Icon" | "DefaultPermissions";
+    FieldsChannel: "Description" | "Icon" | "DefaultPermissions" | "Voice";
     /** @description Invite */
     Invite:
       | {
@@ -1397,6 +1418,10 @@ export interface components {
       roles?: string[];
       /** @description Timestamp this member is timed out until */
       timeout?: components["schemas"]["ISO8601 Timestamp"] | null;
+      /** @description Whether the member is server-wide voice muted */
+      can_publish?: boolean;
+      /** @description Whether the member is server-wide voice deafened */
+      can_receive?: boolean;
     };
     /** @description Composite primary key consisting of server and user id */
     MemberCompositeKey: {
@@ -1488,6 +1513,12 @@ export interface components {
           type: "message_unpinned";
           id: string;
           by: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "call_started";
+          by: string;
+          finished_at?: components["schemas"]["ISO8601 Timestamp"] | null;
         };
     /** @description Embed */
     Embed:
@@ -1824,9 +1855,28 @@ export interface components {
       nsfw?: boolean | null;
     };
     /** @description Voice server token response */
-    LegacyCreateVoiceUserResponse: {
+    CreateVoiceUserResponse: {
       /** @description Token for authenticating with the voice server */
       token: string;
+      /** @description Url of the livekit server to connect to */
+      url: string;
+    };
+    /** @description Join a voice channel */
+    DataJoinCall: {
+      /** @description Name of the node to join */
+      node?: string | null;
+      /**
+       * @description Whether to force disconnect any other existing voice connections
+       *
+       * Useful for disconnecting on another device and joining on a new.
+       */
+      force_disconnect?: boolean | null;
+      /**
+       * @description Users which should be notified of the call starting
+       *
+       * Only used when the user is the first one connected.
+       */
+      recipients?: string[] | null;
     };
     /** @description New role permissions */
     DataSetRolePermissions: {
@@ -1856,7 +1906,7 @@ export interface components {
           permissions: number;
         }
       | {
-          /** @description Allow / deny values to set for members in this `TextChannel` or `VoiceChannel` */
+          /** @description Allow / deny values to set for members in this server channel */
           permissions: components["schemas"]["Override"];
         };
     /** @description Webhook */
@@ -2079,6 +2129,8 @@ export interface components {
       description?: string | null;
       /** @description Whether this channel is age restricted */
       nsfw?: boolean | null;
+      /** @description Voice Information for when this channel is also a voice channel */
+      voice?: components["schemas"]["VoiceInformation"] | null;
     };
     /** @description Server Channel Type */
     LegacyServerChannelType: "Text" | "Voice";
@@ -2106,6 +2158,12 @@ export interface components {
       roles?: string[] | null;
       /** @description Timestamp this member is timed out until */
       timeout?: components["schemas"]["ISO8601 Timestamp"] | null;
+      /** @description server-wide voice muted */
+      can_publish?: boolean | null;
+      /** @description server-wide voice deafened */
+      can_receive?: boolean | null;
+      /** @description voice channel to move to if already in a voice channel */
+      voice_channel?: string | null;
       /**
        * @description Fields to remove from channel object
        * @default []
@@ -2116,7 +2174,14 @@ export interface components {
      * @description Optional fields on server member object
      * @enum {string}
      */
-    FieldsMember: "Nickname" | "Avatar" | "Roles" | "Timeout" | "JoinedAt";
+    FieldsMember:
+      | "Nickname"
+      | "Avatar"
+      | "Roles"
+      | "Timeout"
+      | "CanReceive"
+      | "CanPublish"
+      | "JoinedAt";
     /** Query members by name */
     MemberQueryResponse: {
       /** @description List of members */
@@ -3648,9 +3713,33 @@ export interface operations {
     responses: {
       200: {
         content: {
-          "application/json": components["schemas"]["LegacyCreateVoiceUserResponse"];
+          "application/json": components["schemas"]["CreateVoiceUserResponse"];
         };
       };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DataJoinCall"];
+      };
+    };
+  };
+  /** Stops ringing a specific user in a dm call. You must be in the call to use this endpoint, returns NotConnected otherwise. Only valid in DM/Group channels, will return NoEffect in servers. Returns NotFound if the user is not in the dm/group channel */
+  voice_stop_ring_stop_ring: {
+    parameters: {
+      path: {
+        target: components["schemas"]["Id"];
+        target_user: components["schemas"]["Id"];
+      };
+    };
+    responses: {
+      /** Success */
+      204: never;
       /** An error occurred. */
       default: {
         content: {
@@ -3662,7 +3751,7 @@ export interface operations {
   /**
    * Sets permissions for the specified role in this channel.
    *
-   * Channel must be a `TextChannel` or `VoiceChannel`.
+   * Channel must be a `TextChannel`.
    */
   permissions_set_set_role_permissions: {
     parameters: {
@@ -3693,7 +3782,7 @@ export interface operations {
   /**
    * Sets permissions for the default role in this channel.
    *
-   * Channel must be a `Group`, `TextChannel` or `VoiceChannel`.
+   * Channel must be a `Group` or `TextChannel`.
    */
   permissions_set_default_set_default_channel_permissions: {
     parameters: {

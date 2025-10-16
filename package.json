@@ -1,14 +1,14 @@
 {
-  "name": "revolt-api",
+  "name": "stoat-api",
   "version": "0.8.9",
-  "description": "Revolt API Library",
+  "description": "Stoat API Library",
   "type": "module",
   "exports": {
     ".": "./lib/index.js"
   },
   "types": "lib/index.d.ts",
-  "homepage": "https://developers.revolt.chat",
-  "repository": "https://github.com/revoltchat/api.git",
+  "homepage": "https://developers.stoat.chat",
+  "repository": "https://github.com/stoatchat/javascript-client-api",
   "author": "Paul Makles <insrt.uk>",
   "license": "MIT",
   "scripts": {

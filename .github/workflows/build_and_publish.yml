@@ -2,11 +2,15 @@ name: Build and Publish API
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -24,51 +28,57 @@ jobs:
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
-          author_name: Revolt CI
-          author_email: revolt-ci@users.noreply.github.com
+          author_name: Stoat CI
+          author_email: stoat-ci@users.noreply.github.com
           message: "chore: build library from latest spec [skip ci]"
 
       - name: Find current API version
         run: echo "api_version=$(jq -r .info.version OpenAPI.json)" >> $GITHUB_ENV
+
       - name: Check if tag exists for current version
         uses: mukunku/tag-exists-action@v1.2.0
         id: checkTag
         with:
           tag: ${{ env.api_version }}
+
       - name: Update version in package.json
         if: ${{ steps.checkTag.outputs.exists }} != true
         run: |
           jq '.version="${{ env.api_version }}"' package.json > temp.json
           mv temp.json package.json
+
       - name: Commit changes
         if: ${{ steps.checkTag.outputs.exists }} != true
         uses: EndBug/add-and-commit@v9
         with:
-          author_name: Revolt CI
-          author_email: revolt-ci@users.noreply.github.com
+          author_name: Stoat CI
+          author_email: stoat-ci@users.noreply.github.com
           tag: "${{ env.api_version }} --force"
           message: "chore: bump version to ${{ env.api_version }} [skip ci]"
+
       - name: Publish to NPM
         if: ${{ steps.checkTag.outputs.exists }} != true
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
 
-      - name: Checkout revolt.js repository
+      - name: Checkout stoat.js repository
         if: ${{ steps.checkTag.outputs.exists }} != true
         uses: actions/checkout@v3
         with:
-          repository: revoltchat/revolt.js
-          path: revolt.js
-          token: ${{ secrets.PAT }}
-      - name: Update revolt-api dependency
+          repository: stoatchat/javascript-client-sdk
+          path: stoat.js
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update stoat-api dependency
         if: ${{ steps.checkTag.outputs.exists }} != true
-        run: cd revolt.js && pnpm add revolt-api@${{ env.api_version }}
+        run: cd stoat.js && pnpm add stoat-api@${{ env.api_version }}
+
       - name: Commit changes
         if: ${{ steps.checkTag.outputs.exists }} != true
         uses: EndBug/add-and-commit@v4
         with:
-          cwd: "revolt.js"
-          author_name: Revolt CI
-          author_email: revolt-ci@users.noreply.github.com
-          message: "chore: update revolt-api to ${{ env.api_version }}"
+          cwd: "stoat.js"
+          author_name: Stoat CI
+          author_email: stoat-ci@users.noreply.github.com
+          message: "chore: update stoat-api to ${{ env.api_version }}"

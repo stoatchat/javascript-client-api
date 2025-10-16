@@ -2063,6 +2063,16 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataJoinCall"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "default": {
             "description": "An error occurred.",
@@ -2079,10 +2089,58 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LegacyCreateVoiceUserResponse"
+                  "$ref": "#/components/schemas/CreateVoiceUserResponse"
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "Session Token": []
+          }
+        ]
+      }
+    },
+    "/channels/{target}/end_ring/{target_user}": {
+      "put": {
+        "tags": [
+          "Voice"
+        ],
+        "summary": "Stop Ring",
+        "description": "Stops ringing a specific user in a dm call. You must be in the call to use this endpoint, returns NotConnected otherwise. Only valid in DM/Group channels, will return NoEffect in servers. Returns NotFound if the user is not in the dm/group channel",
+        "operationId": "voice_stop_ring_stop_ring",
+        "parameters": [
+          {
+            "name": "target",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "target_user",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Id"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
           }
         },
         "security": [
@@ -2098,7 +2156,7 @@
           "Channel Permissions"
         ],
         "summary": "Set Role Permission",
-        "description": "Sets permissions for the specified role in this channel.\n\nChannel must be a `TextChannel` or `VoiceChannel`.",
+        "description": "Sets permissions for the specified role in this channel.\n\nChannel must be a `TextChannel`.",
         "operationId": "permissions_set_set_role_permissions",
         "parameters": [
           {
@@ -2163,7 +2221,7 @@
           "Channel Permissions"
         ],
         "summary": "Set Default Permission",
-        "description": "Sets permissions for the default role in this channel.\n\nChannel must be a `Group`, `TextChannel` or `VoiceChannel`.",
+        "description": "Sets permissions for the default role in this channel.\n\nChannel must be a `Group` or `TextChannel`.",
         "operationId": "permissions_set_default_set_default_channel_permissions",
         "parameters": [
           {
@@ -5829,7 +5887,7 @@
           "email",
           "invite_only",
           "january",
-          "voso"
+          "livekit"
         ],
         "properties": {
           "captcha": {
@@ -5864,7 +5922,7 @@
               }
             ]
           },
-          "voso": {
+          "livekit": {
             "description": "Voice server configuration",
             "allOf": [
               {
@@ -5915,20 +5973,44 @@
         "type": "object",
         "required": [
           "enabled",
-          "url",
-          "ws"
+          "nodes"
         ],
         "properties": {
           "enabled": {
             "description": "Whether voice is enabled",
             "type": "boolean"
           },
-          "url": {
-            "description": "URL pointing to the voice API",
+          "nodes": {
+            "description": "All livekit nodes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoiceNode"
+            }
+          }
+        }
+      },
+      "VoiceNode": {
+        "title": "Information about a livekit node",
+        "type": "object",
+        "required": [
+          "lat",
+          "lon",
+          "name",
+          "public_url"
+        ],
+        "properties": {
+          "name": {
             "type": "string"
           },
-          "ws": {
-            "description": "URL pointing to the voice WebSocket server",
+          "lat": {
+            "type": "number",
+            "format": "double"
+          },
+          "lon": {
+            "type": "number",
+            "format": "double"
+          },
+          "public_url": {
             "type": "string"
           }
         }
@@ -6895,6 +6977,76 @@
               "type": {
                 "type": "string",
                 "enum": [
+                  "LiveKitUnavailable"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "NotAVoiceChannel"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "AlreadyConnected"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "NotConnected"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "UnknownNode"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
                   "ProxyError"
                 ]
               }
@@ -7799,70 +7951,15 @@
               "nsfw": {
                 "description": "Whether this channel is marked as not safe for work",
                 "type": "boolean"
-              }
-            }
-          },
-          {
-            "description": "Voice channel belonging to a server",
-            "type": "object",
-            "required": [
-              "_id",
-              "channel_type",
-              "name",
-              "server"
-            ],
-            "properties": {
-              "channel_type": {
-                "type": "string",
-                "enum": [
-                  "VoiceChannel"
-                ]
               },
-              "_id": {
-                "description": "Unique Id",
-                "type": "string"
-              },
-              "server": {
-                "description": "Id of the server this channel belongs to",
-                "type": "string"
-              },
-              "name": {
-                "description": "Display name of the channel",
-                "type": "string"
-              },
-              "description": {
-                "description": "Channel description",
-                "type": "string",
-                "nullable": true
-              },
-              "icon": {
-                "description": "Custom icon attachment",
+              "voice": {
+                "description": "Voice Information for when this channel is also a voice channel",
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/File"
+                    "$ref": "#/components/schemas/VoiceInformation"
                   }
                 ],
                 "nullable": true
-              },
-              "default_permissions": {
-                "description": "Default permissions assigned to users in this channel",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/OverrideField"
-                  }
-                ],
-                "nullable": true
-              },
-              "role_permissions": {
-                "description": "Permissions assigned based on role to this channel",
-                "type": "object",
-                "additionalProperties": {
-                  "$ref": "#/components/schemas/OverrideField"
-                }
-              },
-              "nsfw": {
-                "description": "Whether this channel is marked as not safe for work",
-                "type": "boolean"
               }
             }
           }
@@ -7885,6 +7982,19 @@
             "description": "Disallow bit flags",
             "type": "integer",
             "format": "int64"
+          }
+        }
+      },
+      "VoiceInformation": {
+        "description": "Voice information for a channel",
+        "type": "object",
+        "properties": {
+          "max_users": {
+            "description": "Maximium amount of users allowed in the voice channel at once",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 1.0,
+            "nullable": true
           }
         }
       },
@@ -8255,6 +8365,15 @@
             "type": "boolean",
             "nullable": true
           },
+          "voice": {
+            "description": "Voice Information for voice channels",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VoiceInformation"
+              }
+            ],
+            "nullable": true
+          },
           "remove": {
             "description": "Fields to remove from channel",
             "default": [],
@@ -8271,7 +8390,8 @@
         "enum": [
           "Description",
           "Icon",
-          "DefaultPermissions"
+          "DefaultPermissions",
+          "Voice"
         ]
       },
       "Invite": {
@@ -8554,6 +8674,14 @@
               }
             ],
             "nullable": true
+          },
+          "can_publish": {
+            "description": "Whether the member is server-wide voice muted",
+            "type": "boolean"
+          },
+          "can_receive": {
+            "description": "Whether the member is server-wide voice deafened",
+            "type": "boolean"
           }
         }
       },
@@ -8855,6 +8983,32 @@
               },
               "by": {
                 "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "by",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "call_started"
+                ]
+              },
+              "by": {
+                "type": "string"
+              },
+              "finished_at": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ISO8601 Timestamp"
+                  }
+                ],
+                "nullable": true
               }
             }
           }
@@ -9782,16 +9936,45 @@
           }
         }
       },
-      "LegacyCreateVoiceUserResponse": {
+      "CreateVoiceUserResponse": {
         "description": "Voice server token response",
         "type": "object",
         "required": [
-          "token"
+          "token",
+          "url"
         ],
         "properties": {
           "token": {
             "description": "Token for authenticating with the voice server",
             "type": "string"
+          },
+          "url": {
+            "description": "Url of the livekit server to connect to",
+            "type": "string"
+          }
+        }
+      },
+      "DataJoinCall": {
+        "description": "Join a voice channel",
+        "type": "object",
+        "properties": {
+          "node": {
+            "description": "Name of the node to join",
+            "type": "string",
+            "nullable": true
+          },
+          "force_disconnect": {
+            "description": "Whether to force disconnect any other existing voice connections\n\nUseful for disconnecting on another device and joining on a new.",
+            "type": "boolean",
+            "nullable": true
+          },
+          "recipients": {
+            "description": "Users which should be notified of the call starting\n\nOnly used when the user is the first one connected.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
           }
         }
       },
@@ -9858,7 +10041,7 @@
             ],
             "properties": {
               "permissions": {
-                "description": "Allow / deny values to set for members in this `TextChannel` or `VoiceChannel`",
+                "description": "Allow / deny values to set for members in this server channel",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/Override"
@@ -10410,6 +10593,15 @@
             "description": "Whether this channel is age restricted",
             "type": "boolean",
             "nullable": true
+          },
+          "voice": {
+            "description": "Voice Information for when this channel is also a voice channel",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VoiceInformation"
+              }
+            ],
+            "nullable": true
           }
         }
       },
@@ -10515,6 +10707,21 @@
             ],
             "nullable": true
           },
+          "can_publish": {
+            "description": "server-wide voice muted",
+            "type": "boolean",
+            "nullable": true
+          },
+          "can_receive": {
+            "description": "server-wide voice deafened",
+            "type": "boolean",
+            "nullable": true
+          },
+          "voice_channel": {
+            "description": "voice channel to move to if already in a voice channel",
+            "type": "string",
+            "nullable": true
+          },
           "remove": {
             "description": "Fields to remove from channel object",
             "default": [],
@@ -10533,6 +10740,8 @@
           "Avatar",
           "Roles",
           "Timeout",
+          "CanReceive",
+          "CanPublish",
           "JoinedAt"
         ]
       },

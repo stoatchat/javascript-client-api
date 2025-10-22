@@ -1,6 +1,6 @@
 {
   "name": "stoat-api",
-  "version": "0.8.9-3",
+  "version": "0.8.9-4",
   "description": "Stoat API Library",
   "type": "module",
   "exports": {
@@ -12,7 +12,7 @@
   "author": "Paul Makles <insrt.uk>",
   "license": "MIT",
   "scripts": {
-    "build": "REWRITE_ANYOF=1 oapilib && tsc",
+    "build": "REWRITE_ANYOF=1 node cli.js && tsc",
     "prepublish": "in-publish && pnpm build || echo Skipping build."
   },
   "devDependencies": {

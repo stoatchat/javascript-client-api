@@ -7,10 +7,11 @@ settings:
 importers:
 
   .:
+    dependencies:
+      json-with-bigint:
+        specifier: ^3.4.4
+        version: 3.4.4
     devDependencies:
-      '@insertish/oapi':
-        specifier: 0.2.6
-        version: 0.2.6
       in-publish:
         specifier: ^2.0.1
         version: 2.0.1
@@ -26,10 +27,6 @@ packages:
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
-
-  '@insertish/oapi@0.2.6':
-    resolution: {integrity: sha512-6IWpLFhygWu+hN8+bNXH3pK0hypxoS522Vn6AOhphzXrWQlDo6IhEWRWXV/XlyYQIPiugkDcqtD2p0dtB9Wftg==}
-    hasBin: true
 
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
@@ -47,6 +44,9 @@ packages:
   js-yaml@4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
+
+  json-with-bigint@3.4.4:
+    resolution: {integrity: sha512-AhpYAAaZsPjU7smaBomDt1SOQshi9rEm6BlTbfVwsG1vNmeHKtEedJi62sHZzJTyKNtwzmNnrsd55kjwJ7054A==}
 
   mime@3.0.0:
     resolution: {integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==}
@@ -66,11 +66,6 @@ packages:
   tiny-glob@0.2.9:
     resolution: {integrity: sha512-g/55ssRPUjShh+xkfx9UPDXqhckHEsHr4Vd9zX55oSdGZc/MD0m3sferOkwWtp98bv+kcVfEHtRJgBVJzelrzg==}
 
-  typescript@4.9.5:
-    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-
   typescript@5.8.3:
     resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
@@ -88,12 +83,6 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@insertish/oapi@0.2.6':
-    dependencies:
-      typescript: 4.9.5
-    optionalDependencies:
-      openapi-typescript: 5.4.2
-
   argparse@2.0.1: {}
 
   globalyzer@0.1.0: {}
@@ -105,6 +94,8 @@ snapshots:
   js-yaml@4.1.0:
     dependencies:
       argparse: 2.0.1
+
+  json-with-bigint@3.4.4: {}
 
   mime@3.0.0: {}
 
@@ -123,8 +114,6 @@ snapshots:
     dependencies:
       globalyzer: 0.1.0
       globrex: 0.1.2
-
-  typescript@4.9.5: {}
 
   typescript@5.8.3: {}
 

@@ -764,6 +764,10 @@ export interface components {
         }
       | {
           /** @enum {string} */
+          type: "IsElevated";
+        }
+      | {
+          /** @enum {string} */
           type: "DatabaseError";
           operation: string;
           collection: string;
@@ -2002,6 +2006,8 @@ export interface components {
     };
     /** @description Role */
     Role: {
+      /** @description Unique Id */
+      _id: string;
       /** @description Role name */
       name: string;
       /** @description Permissions available to this role */
@@ -4600,7 +4606,8 @@ export interface operations {
   /** Report a piece of content to the moderation team. */
   report_content_report_content: {
     responses: {
-      200: unknown;
+      /** Success */
+      204: never;
       /** An error occurred. */
       default: {
         content: {
@@ -5075,7 +5082,8 @@ export interface operations {
   /** Accept/acknowledge changes to platform policy. */
   acknowledge_policy_changes_acknowledge_policy_changes: {
     responses: {
-      200: unknown;
+      /** Success */
+      204: never;
       /** An error occurred. */
       default: {
         content: {

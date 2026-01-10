@@ -13,7 +13,7 @@
       "name": "AGPLv3",
       "url": "https://github.com/revoltchat/delta/blob/master/LICENSE"
     },
-    "version": "0.8.9-3"
+    "version": "0.9.4"
   },
   "servers": [
     {
@@ -4108,8 +4108,8 @@
               }
             }
           },
-          "200": {
-            "description": ""
+          "204": {
+            "description": "Success"
           }
         },
         "security": [
@@ -5172,8 +5172,8 @@
               }
             }
           },
-          "200": {
-            "description": ""
+          "204": {
+            "description": "Success"
           }
         },
         "security": [
@@ -6784,6 +6784,20 @@
                 "type": "string",
                 "enum": [
                   "NotOwner"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "IsElevated"
                 ]
               }
             }
@@ -10308,10 +10322,15 @@
         "description": "Role",
         "type": "object",
         "required": [
+          "_id",
           "name",
           "permissions"
         ],
         "properties": {
+          "_id": {
+            "description": "Unique Id",
+            "type": "string"
+          },
           "name": {
             "description": "Role name",
             "type": "string"

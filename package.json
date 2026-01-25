@@ -1,6 +1,6 @@
 {
   "name": "stoat-api",
-  "version": "0.9.4",
+  "version": "0.10.1",
   "description": "Stoat API Library",
   "type": "module",
   "exports": {

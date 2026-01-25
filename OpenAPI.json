@@ -10761,7 +10761,8 @@
           "Timeout",
           "CanReceive",
           "CanPublish",
-          "JoinedAt"
+          "JoinedAt",
+          "VoiceChannel"
         ]
       },
       "MemberQueryResponse": {

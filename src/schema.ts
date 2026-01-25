@@ -2187,7 +2187,8 @@ export interface components {
       | "Timeout"
       | "CanReceive"
       | "CanPublish"
-      | "JoinedAt";
+      | "JoinedAt"
+      | "VoiceChannel";
     /** Query members by name */
     MemberQueryResponse: {
       /** @description List of members */

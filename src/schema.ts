@@ -501,6 +501,8 @@ export interface components {
       january: components["schemas"]["Feature"];
       /** @description Voice server configuration */
       livekit: components["schemas"]["VoiceFeature"];
+      /** @description Limits */
+      limits: components["schemas"]["LimitsConfig"];
     };
     /** hCaptcha Configuration */
     CaptchaFeature: {
@@ -531,6 +533,95 @@ export interface components {
       /** Format: double */
       lon: number;
       public_url: string;
+    };
+    /** Limits For Users */
+    LimitsConfig: {
+      /** @description Global Limits */
+      global: components["schemas"]["GlobalLimits"];
+      /** @description New User Limits */
+      new_user: components["schemas"]["UserLimits"];
+      /** @description Default User Limits */
+      default: components["schemas"]["UserLimits"];
+    };
+    /** Global limits */
+    GlobalLimits: {
+      /**
+       * Format: int64
+       * @description max group size
+       */
+      group_size: number;
+      /**
+       * Format: int64
+       * @description max message embeds
+       */
+      message_embeds: number;
+      /**
+       * Format: int64
+       * @description max replies
+       */
+      message_replies: number;
+      /**
+       * Format: int64
+       * @description max reactions per message
+       */
+      message_reactions: number;
+      /**
+       * Format: int64
+       * @description max server emoji
+       */
+      server_emoji: number;
+      /**
+       * Format: int64
+       * @description max server roles
+       */
+      server_roles: number;
+      /**
+       * Format: int64
+       * @description max server channels
+       */
+      server_channels: number;
+      /** Format: int64 */
+      body_limit_size: number;
+    };
+    /** User Limits */
+    UserLimits: {
+      /**
+       * Format: int64
+       * @description Max Outgoing Friend Requests
+       */
+      outgoing_friend_requests: number;
+      /**
+       * Format: int64
+       * @description Max Owned Bots
+       */
+      bots: number;
+      /**
+       * Format: int64
+       * @description Max message content length
+       */
+      message_length: number;
+      /**
+       * Format: int64
+       * @description max message attachments
+       */
+      message_attachments: number;
+      /**
+       * Format: int64
+       * @description max servers
+       */
+      servers: number;
+      /**
+       * Format: int64
+       * @description max audio quality
+       */
+      voice_quality: number;
+      /** @description video streaming enabled */
+      video: boolean;
+      /** @description max video resolution (vertical, horizontal) */
+      video_resolution: number[];
+      /** @description min/max aspect ratios */
+      video_aspect_ratio: number[];
+      file_upload_size_limits: { [key: string]: number };
     };
     /** Build Information */
     BuildInformation: {

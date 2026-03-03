@@ -5887,6 +5887,7 @@
           "email",
           "invite_only",
           "january",
+          "limits",
           "livekit"
         ],
         "properties": {
@@ -5927,6 +5928,14 @@
             "allOf": [
               {
                 "$ref": "#/components/schemas/VoiceFeature"
+              }
+            ]
+          },
+          "limits": {
+            "description": "Limits",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LimitsConfig"
               }
             ]
           }
@@ -6012,6 +6021,176 @@
           },
           "public_url": {
             "type": "string"
+          }
+        }
+      },
+      "LimitsConfig": {
+        "title": "Limits For Users",
+        "type": "object",
+        "required": [
+          "default",
+          "global",
+          "new_user"
+        ],
+        "properties": {
+          "global": {
+            "description": "Global Limits",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/GlobalLimits"
+              }
+            ]
+          },
+          "new_user": {
+            "description": "New User Limits",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserLimits"
+              }
+            ]
+          },
+          "default": {
+            "description": "Default User Limits",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserLimits"
+              }
+            ]
+          }
+        }
+      },
+      "GlobalLimits": {
+        "title": "Global limits",
+        "type": "object",
+        "required": [
+          "body_limit_size",
+          "group_size",
+          "message_embeds",
+          "message_reactions",
+          "message_replies",
+          "server_channels",
+          "server_emoji",
+          "server_roles"
+        ],
+        "properties": {
+          "group_size": {
+            "description": "max group size",
+            "type": "integer",
+            "format": "int64"
+          },
+          "message_embeds": {
+            "description": "max message embeds",
+            "type": "integer",
+            "format": "int64"
+          },
+          "message_replies": {
+            "description": "max replies",
+            "type": "integer",
+            "format": "int64"
+          },
+          "message_reactions": {
+            "description": "max reactions per message",
+            "type": "integer",
+            "format": "int64"
+          },
+          "server_emoji": {
+            "description": "max server emoji",
+            "type": "integer",
+            "format": "int64"
+          },
+          "server_roles": {
+            "description": "max server roles",
+            "type": "integer",
+            "format": "int64"
+          },
+          "server_channels": {
+            "description": "max server channels",
+            "type": "integer",
+            "format": "int64"
+          },
+          "body_limit_size": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "UserLimits": {
+        "title": "User Limits",
+        "type": "object",
+        "required": [
+          "bots",
+          "file_upload_size_limits",
+          "message_attachments",
+          "message_length",
+          "outgoing_friend_requests",
+          "servers",
+          "video",
+          "video_aspect_ratio",
+          "video_resolution",
+          "voice_quality"
+        ],
+        "properties": {
+          "outgoing_friend_requests": {
+            "description": "Max Outgoing Friend Requests",
+            "type": "integer",
+            "format": "int64"
+          },
+          "bots": {
+            "description": "Max Owned Bots",
+            "type": "integer",
+            "format": "int64"
+          },
+          "message_length": {
+            "description": "Max message content length",
+            "type": "integer",
+            "format": "int64"
+          },
+          "message_attachments": {
+            "description": "max message attachments",
+            "type": "integer",
+            "format": "int64"
+          },
+          "servers": {
+            "description": "max servers",
+            "type": "integer",
+            "format": "int64"
+          },
+          "voice_quality": {
+            "description": "max audio quality",
+            "type": "integer",
+            "format": "int64"
+          },
+          "video": {
+            "description": "video streaming enabled",
+            "type": "boolean"
+          },
+          "video_resolution": {
+            "description": "max video resolution (vertical, horizontal)",
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "maxItems": 2,
+            "minItems": 2
+          },
+          "video_aspect_ratio": {
+            "description": "min/max aspect ratios",
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            },
+            "maxItems": 2,
+            "minItems": 2
+          },
+          "file_upload_size_limits": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "uint",
+              "minimum": 0.0
+            }
           }
         }
       },

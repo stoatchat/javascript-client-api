@@ -6068,6 +6068,7 @@
           "message_embeds",
           "message_reactions",
           "message_replies",
+          "restrict_server_creation",
           "server_channels",
           "server_emoji",
           "server_roles"
@@ -6111,6 +6112,13 @@
           "body_limit_size": {
             "type": "integer",
             "format": "int64"
+          },
+          "restrict_server_creation": {
+            "description": "restrict server creation to these users. if blank, all users can create servers",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -6671,6 +6679,20 @@
                 "type": "string",
                 "enum": [
                   "NotPinned"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "CantCreateServers"
                 ]
               }
             }

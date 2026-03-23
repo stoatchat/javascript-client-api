@@ -582,6 +582,8 @@ export interface components {
       server_channels: number;
       /** Format: int64 */
       body_limit_size: number;
+      /** @description restrict server creation to these users. if blank, all users can create servers */
+      restrict_server_creation: string[];
     };
     /** User Limits */
     UserLimits: {
@@ -768,6 +770,10 @@ export interface components {
       | {
           /** @enum {string} */
           type: "NotPinned";
+        }
+      | {
+          /** @enum {string} */
+          type: "CantCreateServers";
         }
       | {
           /** @enum {string} */

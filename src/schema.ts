@@ -1050,6 +1050,7 @@ export interface components {
           width: number;
           /** Format: uint */
           height: number;
+          animated: boolean;
         }
       | {
           /** @enum {string} */

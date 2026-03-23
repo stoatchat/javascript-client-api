@@ -7560,9 +7560,10 @@
             }
           },
           {
-            "description": "File is an image with specific dimensions",
+            "description": "File is an image with specific dimensions, and may be animated",
             "type": "object",
             "required": [
+              "animated",
               "height",
               "type",
               "width"
@@ -7583,6 +7584,9 @@
                 "type": "integer",
                 "format": "uint",
                 "minimum": 0.0
+              },
+              "animated": {
+                "type": "boolean"
               }
             }
           },

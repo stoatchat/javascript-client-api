@@ -80,19 +80,17 @@ export interface paths {
     /** Invite a bot to a server or group by its id.` */
     post: operations["invite_invite_bot"];
   };
-  "/bots/{bot}": {
+  "/bots/{bot_id}": {
     /** Fetch details of a bot you own by its id. */
     get: operations["fetch_fetch_bot"];
-  };
-  "/bots/@me": {
-    /** Fetch all of the bots that you have control over. */
-    get: operations["fetch_owned_fetch_owned_bots"];
-  };
-  "/bots/{target}": {
     /** Delete a bot by its id. */
     delete: operations["delete_delete_bot"];
     /** Edit bot details by its id. */
     patch: operations["edit_edit_bot"];
+  };
+  "/bots/@me": {
+    /** Fetch all of the bots that you have control over. */
+    get: operations["fetch_owned_fetch_owned_bots"];
   };
   "/channels/{target}/ack/{message}": {
     /** Lets the server and all other clients know that we've seen this message id in this channel. */
@@ -163,8 +161,6 @@ export interface paths {
   "/channels/{group_id}/recipients/{member_id}": {
     /** Adds another user to the group. */
     put: operations["group_add_member_add_member"];
-  };
-  "/channels/{target}/recipients/{member}": {
     /** Removes a user from the group. */
     delete: operations["group_remove_member_remove_member"];
   };
@@ -210,13 +206,11 @@ export interface paths {
      */
     delete: operations["message_clear_reactions_clear_reactions"];
   };
-  "/channels/{target}/webhooks": {
-    /** Creates a webhook which 3rd party platforms can use to send messages */
-    post: operations["webhook_create_create_webhook"];
-  };
   "/channels/{channel_id}/webhooks": {
     /** Gets all webhooks inside the channel */
     get: operations["webhook_fetch_all_fetch_webhooks"];
+    /** Creates a webhook which 3rd party platforms can use to send messages */
+    post: operations["webhook_create_create_webhook"];
   };
   "/servers/create": {
     /** Create a new server. */
@@ -242,13 +236,11 @@ export interface paths {
     /** Fetch all server members. */
     get: operations["member_fetch_all_fetch_all"];
   };
-  "/servers/{target}/members/{member}": {
+  "/servers/{server_id}/members/{member_id}": {
     /** Retrieve a member. */
     get: operations["member_fetch_fetch"];
     /** Removes a member from the server. */
     delete: operations["member_remove_kick"];
-  };
-  "/servers/{server}/members/{member}": {
     /** Edit a member by their id. */
     patch: operations["member_edit_edit"];
   };
@@ -306,13 +298,11 @@ export interface paths {
     /** Delete an invite by its id. */
     delete: operations["invite_delete_delete"];
   };
-  "/custom/emoji/{id}": {
-    /** Create an emoji by its Autumn upload id. */
-    put: operations["emoji_create_create_emoji"];
-  };
   "/custom/emoji/{emoji_id}": {
     /** Fetch an emoji by its id. */
     get: operations["emoji_fetch_fetch_emoji"];
+    /** Create an emoji by its Autumn upload id. */
+    put: operations["emoji_create_create_emoji"];
     /** Delete an emoji by its id. */
     delete: operations["emoji_delete_delete_emoji"];
   };
@@ -773,6 +763,12 @@ export interface components {
         }
       | {
           /** @enum {string} */
+          type: "InSlowmode";
+          /** Format: uint64 */
+          retry_after: number;
+        }
+      | {
+          /** @enum {string} */
           type: "CantCreateServers";
         }
       | {
@@ -1056,6 +1052,7 @@ export interface components {
           width: number;
           /** Format: uint */
           height: number;
+          thumbhash?: number[] | null;
           animated: boolean;
         }
       | {
@@ -1243,6 +1240,11 @@ export interface components {
           nsfw?: boolean;
           /** @description Voice Information for when this channel is also a voice channel */
           voice?: components["schemas"]["VoiceInformation"] | null;
+          /**
+           * Format: uint64
+           * @description The channel's slowmode delay in seconds
+           */
+          slowmode?: number | null;
         };
     /** @description Representation of a single permission override as it appears on models and in the database */
     OverrideField: {
@@ -1423,6 +1425,11 @@ export interface components {
       archived?: boolean | null;
       /** @description Voice Information for voice channels */
       voice?: components["schemas"]["VoiceInformation"] | null;
+      /**
+       * Format: uint64
+       * @description The channel's slow mode delay in seconds, up to 6 hours
+       */
+      slowmode?: number | null;
       /**
        * @description Fields to remove from channel
        * @default []
@@ -2204,6 +2211,8 @@ export interface components {
        * Must be enabled in order to show up on [Revolt Discover](https://rvlt.gg).
        */
       analytics?: boolean | null;
+      /** @description User id of the new owner */
+      owner?: string | null;
       /**
        * @description Fields to remove from server object
        * @default []
@@ -2305,6 +2314,11 @@ export interface components {
     DataBanCreate: {
       /** @description Ban reason */
       reason?: string | null;
+      /**
+       * Format: int64
+       * @description Messages to delete in seconds
+       */
+      delete_message_seconds?: number | null;
     };
     /** @description Ban list result */
     BanListResult: {
@@ -3300,7 +3314,7 @@ export interface operations {
   fetch_fetch_bot: {
     parameters: {
       path: {
-        bot: components["schemas"]["Id"];
+        bot_id: components["schemas"]["Id"];
       };
     };
     responses: {
@@ -3317,27 +3331,11 @@ export interface operations {
       };
     };
   };
-  /** Fetch all of the bots that you have control over. */
-  fetch_owned_fetch_owned_bots: {
-    responses: {
-      200: {
-        content: {
-          "application/json": components["schemas"]["OwnedBotsResponse"];
-        };
-      };
-      /** An error occurred. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["Error"];
-        };
-      };
-    };
-  };
   /** Delete a bot by its id. */
   delete_delete_bot: {
     parameters: {
       path: {
-        target: components["schemas"]["Id"];
+        bot_id: components["schemas"]["Id"];
       };
     };
     responses: {
@@ -3355,7 +3353,7 @@ export interface operations {
   edit_edit_bot: {
     parameters: {
       path: {
-        target: components["schemas"]["Id"];
+        bot_id: components["schemas"]["Id"];
       };
     };
     responses: {
@@ -3374,6 +3372,22 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["DataEditBot"];
+      };
+    };
+  };
+  /** Fetch all of the bots that you have control over. */
+  fetch_owned_fetch_owned_bots: {
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["OwnedBotsResponse"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
       };
     };
   };
@@ -3793,8 +3807,8 @@ export interface operations {
   group_remove_member_remove_member: {
     parameters: {
       path: {
-        target: components["schemas"]["Id"];
-        member: components["schemas"]["Id"];
+        group_id: components["schemas"]["Id"];
+        member_id: components["schemas"]["Id"];
       };
     };
     responses: {
@@ -3987,32 +4001,6 @@ export interface operations {
       };
     };
   };
-  /** Creates a webhook which 3rd party platforms can use to send messages */
-  webhook_create_create_webhook: {
-    parameters: {
-      path: {
-        target: components["schemas"]["Id"];
-      };
-    };
-    responses: {
-      200: {
-        content: {
-          "application/json": components["schemas"]["Webhook"];
-        };
-      };
-      /** An error occurred. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["Error"];
-        };
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateWebhookBody"];
-      };
-    };
-  };
   /** Gets all webhooks inside the channel */
   webhook_fetch_all_fetch_webhooks: {
     parameters: {
@@ -4031,6 +4019,32 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["Error"];
         };
+      };
+    };
+  };
+  /** Creates a webhook which 3rd party platforms can use to send messages */
+  webhook_create_create_webhook: {
+    parameters: {
+      path: {
+        channel_id: components["schemas"]["Id"];
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["Webhook"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CreateWebhookBody"];
       };
     };
   };
@@ -4201,8 +4215,8 @@ export interface operations {
   member_fetch_fetch: {
     parameters: {
       path: {
-        target: components["schemas"]["Id"];
-        member: components["schemas"]["Id"];
+        server_id: components["schemas"]["Id"];
+        member_id: components["schemas"]["Id"];
       };
       query: {
         roles?: boolean | null;
@@ -4226,8 +4240,8 @@ export interface operations {
   member_remove_kick: {
     parameters: {
       path: {
-        target: components["schemas"]["Id"];
-        member: components["schemas"]["Id"];
+        server_id: components["schemas"]["Id"];
+        member_id: components["schemas"]["Id"];
       };
     };
     responses: {
@@ -4245,8 +4259,8 @@ export interface operations {
   member_edit_edit: {
     parameters: {
       path: {
-        server: components["schemas"]["Id"];
-        member: components["schemas"]["Id"];
+        server_id: components["schemas"]["Id"];
+        member_id: components["schemas"]["Id"];
       };
     };
     responses: {
@@ -4637,32 +4651,6 @@ export interface operations {
       };
     };
   };
-  /** Create an emoji by its Autumn upload id. */
-  emoji_create_create_emoji: {
-    parameters: {
-      path: {
-        id: string;
-      };
-    };
-    responses: {
-      200: {
-        content: {
-          "application/json": components["schemas"]["Emoji"];
-        };
-      };
-      /** An error occurred. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["Error"];
-        };
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["DataCreateEmoji"];
-      };
-    };
-  };
   /** Fetch an emoji by its id. */
   emoji_fetch_fetch_emoji: {
     parameters: {
@@ -4681,6 +4669,32 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["Error"];
         };
+      };
+    };
+  };
+  /** Create an emoji by its Autumn upload id. */
+  emoji_create_create_emoji: {
+    parameters: {
+      path: {
+        emoji_id: string;
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["Emoji"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DataCreateEmoji"];
       };
     };
   };

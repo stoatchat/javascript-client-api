@@ -1053,7 +1053,7 @@ export interface components {
           /** Format: uint */
           height: number;
           thumbhash?: number[] | null;
-          animated: boolean;
+          animated?: boolean | null;
         }
       | {
           /** @enum {string} */

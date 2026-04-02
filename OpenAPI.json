@@ -7601,7 +7601,6 @@
             "description": "File is an image with specific dimensions, and may be animated",
             "type": "object",
             "required": [
-              "animated",
               "height",
               "type",
               "width"
@@ -7633,7 +7632,8 @@
                 "nullable": true
               },
               "animated": {
-                "type": "boolean"
+                "type": "boolean",
+                "nullable": true
               }
             }
           },

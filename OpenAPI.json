@@ -13,7 +13,7 @@
       "name": "AGPLv3",
       "url": "https://github.com/stoatchat/stoatchat/blob/main/crates/delta/LICENSE"
     },
-    "version": "0.12.0"
+    "version": "0.13.5"
   },
   "servers": [
     {
@@ -4073,6 +4073,61 @@
             "Session Token": []
           }
         ]
+      },
+      "patch": {
+        "tags": [
+          "Emojis"
+        ],
+        "summary": "Edit Emoji",
+        "description": "Edit an emoji by its id.",
+        "operationId": "emoji_edit_edit_emoji",
+        "parameters": [
+          {
+            "name": "emoji_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataEditEmoji"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Emoji"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Session Token": []
+          }
+        ]
       }
     },
     "/safety/report": {
@@ -5406,6 +5461,123 @@
         ]
       }
     },
+    "/webhooks/{webhook_id}/{token}/{message_id}": {
+      "delete": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Deletes a webhook message",
+        "description": "Deletes a message sent by a webhook",
+        "operationId": "webhook_delete_message_webhook_delete_message",
+        "parameters": [
+          {
+            "name": "webhook_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Id"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Edits a webhook message",
+        "description": "Edits a message sent by a webhook",
+        "operationId": "webhook_edit_message_webhook_edit_message",
+        "parameters": [
+          {
+            "name": "webhook_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "message_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataEditMessage"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/webhooks/{webhook_id}/{token}": {
       "get": {
         "tags": [
@@ -5883,6 +6055,7 @@
           "email",
           "invite_only",
           "january",
+          "legal_links",
           "limits",
           "livekit"
         ],
@@ -5932,6 +6105,14 @@
             "allOf": [
               {
                 "$ref": "#/components/schemas/LimitsConfig"
+              }
+            ]
+          },
+          "legal_links": {
+            "description": "Legal links",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LegalLinks"
               }
             ]
           }
@@ -6064,6 +6245,7 @@
           "message_embeds",
           "message_reactions",
           "message_replies",
+          "new_user_hours",
           "restrict_server_creation",
           "server_channels",
           "server_emoji",
@@ -6115,6 +6297,11 @@
             "items": {
               "type": "string"
             }
+          },
+          "new_user_hours": {
+            "description": "New user hours",
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -6195,6 +6382,29 @@
               "format": "uint",
               "minimum": 0.0
             }
+          }
+        }
+      },
+      "LegalLinks": {
+        "title": "Legal links",
+        "type": "object",
+        "required": [
+          "guidelines",
+          "privacy_policy",
+          "terms_of_service"
+        ],
+        "properties": {
+          "terms_of_service": {
+            "description": "Terms of Service URL",
+            "type": "string"
+          },
+          "privacy_policy": {
+            "description": "Privacy Policy URL",
+            "type": "string"
+          },
+          "guidelines": {
+            "description": "Guidelines URL",
+            "type": "string"
           }
         }
       },
@@ -6449,6 +6659,20 @@
                 "type": "string",
                 "enum": [
                   "UnknownMessage"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "CannotDeleteMessage"
                 ]
               }
             }
@@ -9868,7 +10092,6 @@
           "content": {
             "description": "Message content to send",
             "type": "string",
-            "maxLength": 2000,
             "minLength": 0,
             "nullable": true
           },
@@ -10116,7 +10339,6 @@
           "content": {
             "description": "New message content",
             "type": "string",
-            "maxLength": 2000,
             "minLength": 1,
             "nullable": true
           },
@@ -10602,6 +10824,15 @@
             "default": 0,
             "type": "integer",
             "format": "int64"
+          },
+          "icon": {
+            "description": "Role icon",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/File"
+              }
+            ],
+            "nullable": true
           }
         }
       },
@@ -11211,6 +11442,13 @@
             "format": "int64",
             "nullable": true
           },
+          "icon": {
+            "description": "Role icon\n\nProvide an Autumn attachment Id.",
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "nullable": true
+          },
           "remove": {
             "description": "Fields to remove from role object",
             "default": [],
@@ -11225,7 +11463,8 @@
         "description": "Optional fields on server object",
         "type": "string",
         "enum": [
-          "Colour"
+          "Colour",
+          "Icon"
         ]
       },
       "DataSetServerRolePermission": {
@@ -11588,6 +11827,20 @@
             "description": "Whether the emoji is mature",
             "default": false,
             "type": "boolean"
+          }
+        }
+      },
+      "DataEditEmoji": {
+        "description": "Edit emoji information",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Emoji name",
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 1,
+            "pattern": "^[a-z0-9_]+$",
+            "nullable": true
           }
         }
       },

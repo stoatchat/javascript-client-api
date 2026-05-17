@@ -305,6 +305,8 @@ export interface paths {
     put: operations["emoji_create_create_emoji"];
     /** Delete an emoji by its id. */
     delete: operations["emoji_delete_delete_emoji"];
+    /** Edit an emoji by its id. */
+    patch: operations["emoji_edit_edit_emoji"];
   };
   "/safety/report": {
     /** Report a piece of content to the moderation team. */
@@ -436,6 +438,12 @@ export interface paths {
     /** Fetch information about unread state on channels. */
     get: operations["get_unreads_unreads"];
   };
+  "/webhooks/{webhook_id}/{token}/{message_id}": {
+    /** Deletes a message sent by a webhook */
+    delete: operations["webhook_delete_message_webhook_delete_message"];
+    /** Edits a message sent by a webhook */
+    patch: operations["webhook_edit_message_webhook_edit_message"];
+  };
   "/webhooks/{webhook_id}/{token}": {
     /** Gets a webhook with a token */
     get: operations["webhook_fetch_token_webhook_fetch_token"];
@@ -493,6 +501,8 @@ export interface components {
       livekit: components["schemas"]["VoiceFeature"];
       /** @description Limits */
       limits: components["schemas"]["LimitsConfig"];
+      /** @description Legal links */
+      legal_links: components["schemas"]["LegalLinks"];
     };
     /** hCaptcha Configuration */
     CaptchaFeature: {
@@ -574,6 +584,11 @@ export interface components {
       body_limit_size: number;
       /** @description restrict server creation to these users. if blank, all users can create servers */
       restrict_server_creation: string[];
+      /**
+       * Format: int64
+       * @description New user hours
+       */
+      new_user_hours: number;
     };
     /** User Limits */
     UserLimits: {
@@ -614,6 +629,15 @@ export interface components {
       /** @description min/max aspect ratios */
       video_aspect_ratio: number[];
       file_upload_size_limits: { [key: string]: number };
+    };
+    /** Legal links */
+    LegalLinks: {
+      /** @description Terms of Service URL */
+      terms_of_service: string;
+      /** @description Privacy Policy URL */
+      privacy_policy: string;
+      /** @description Guidelines URL */
+      guidelines: string;
     };
     /** Build Information */
     BuildInformation: {
@@ -694,6 +718,10 @@ export interface components {
       | {
           /** @enum {string} */
           type: "UnknownMessage";
+        }
+      | {
+          /** @enum {string} */
+          type: "CannotDeleteMessage";
         }
       | {
           /** @enum {string} */
@@ -2131,6 +2159,8 @@ export interface components {
        * @default 0
        */
       rank?: number;
+      /** @description Role icon */
+      icon?: components["schemas"]["File"] | null;
     };
     /** @description Information about new server to create */
     DataCreateServer: {
@@ -2375,6 +2405,12 @@ export interface components {
        */
       rank?: number | null;
       /**
+       * @description Role icon
+       *
+       * Provide an Autumn attachment Id.
+       */
+      icon?: string | null;
+      /**
        * @description Fields to remove from role object
        * @default []
        */
@@ -2384,7 +2420,7 @@ export interface components {
      * @description Optional fields on server object
      * @enum {string}
      */
-    FieldsRole: "Colour";
+    FieldsRole: "Colour" | "Icon";
     /** @description New role permissions */
     DataSetServerRolePermission: {
       /** @description Allow / deny values for the role in this server. */
@@ -2506,6 +2542,11 @@ export interface components {
        * @default false
        */
       nsfw?: boolean;
+    };
+    /** @description Edit emoji information */
+    DataEditEmoji: {
+      /** @description Emoji name */
+      name?: string | null;
     };
     /** Report Data */
     DataReportContent: {
@@ -4716,6 +4757,32 @@ export interface operations {
       };
     };
   };
+  /** Edit an emoji by its id. */
+  emoji_edit_edit_emoji: {
+    parameters: {
+      path: {
+        emoji_id: components["schemas"]["Id"];
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["Emoji"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DataEditEmoji"];
+      };
+    };
+  };
   /** Report a piece of content to the moderation team. */
   report_content_report_content: {
     responses: {
@@ -5306,6 +5373,54 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["Error"];
         };
+      };
+    };
+  };
+  /** Deletes a message sent by a webhook */
+  webhook_delete_message_webhook_delete_message: {
+    parameters: {
+      path: {
+        webhook_id: components["schemas"]["Id"];
+        token: string;
+        message_id: components["schemas"]["Id"];
+      };
+    };
+    responses: {
+      /** Success */
+      204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Edits a message sent by a webhook */
+  webhook_edit_message_webhook_edit_message: {
+    parameters: {
+      path: {
+        webhook_id: components["schemas"]["Id"];
+        token: string;
+        message_id: components["schemas"]["Id"];
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["Message"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DataEditMessage"];
       };
     };
   };

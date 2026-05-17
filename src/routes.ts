@@ -150,6 +150,8 @@ export type APIRoutes =
 | { method: 'put', path: '-/custom/emoji/{emoji_id}', parts: 3, params: paths['/custom/emoji/{emoji_id}']['put']['requestBody']['content']['application/json'], response: paths['/custom/emoji/{emoji_id}']['put']['responses']['200']['content']['application/json'] }
 | { method: 'delete', path: `/custom/emoji/${string}`, parts: 3, params: undefined, response: undefined }
 | { method: 'delete', path: '-/custom/emoji/{emoji_id}', parts: 3, params: undefined, response: undefined }
+| { method: 'patch', path: `/custom/emoji/${string}`, parts: 3, params: paths['/custom/emoji/{emoji_id}']['patch']['requestBody']['content']['application/json'], response: paths['/custom/emoji/{emoji_id}']['patch']['responses']['200']['content']['application/json'] }
+| { method: 'patch', path: '-/custom/emoji/{emoji_id}', parts: 3, params: paths['/custom/emoji/{emoji_id}']['patch']['requestBody']['content']['application/json'], response: paths['/custom/emoji/{emoji_id}']['patch']['responses']['200']['content']['application/json'] }
 | { method: 'post', path: `/safety/report`, parts: 2, params: paths['/safety/report']['post']['requestBody']['content']['application/json'], response: undefined }
 | { method: 'post', path: `/auth/account/create`, parts: 3, params: paths['/auth/account/create']['post']['requestBody']['content']['application/json'], response: undefined }
 | { method: 'post', path: `/auth/account/reverify`, parts: 3, params: paths['/auth/account/reverify']['post']['requestBody']['content']['application/json'], response: undefined }
@@ -187,6 +189,10 @@ export type APIRoutes =
 | { method: 'post', path: `/sync/settings/fetch`, parts: 3, params: paths['/sync/settings/fetch']['post']['requestBody']['content']['application/json'], response: paths['/sync/settings/fetch']['post']['responses']['200']['content']['application/json'] }
 | { method: 'post', path: `/sync/settings/set`, parts: 3, params: paths['/sync/settings/set']['post']['parameters']['query']|paths['/sync/settings/set']['post']['requestBody']['content']['application/json'], response: undefined }
 | { method: 'get', path: `/sync/unreads`, parts: 2, params: undefined, response: paths['/sync/unreads']['get']['responses']['200']['content']['application/json'] }
+| { method: 'delete', path: `/webhooks/${string}/${string}/${string}`, parts: 4, params: undefined, response: undefined }
+| { method: 'delete', path: '-/webhooks/{webhook_id}/{token}/{message_id}', parts: 4, params: undefined, response: undefined }
+| { method: 'patch', path: `/webhooks/${string}/${string}/${string}`, parts: 4, params: paths['/webhooks/{webhook_id}/{token}/{message_id}']['patch']['requestBody']['content']['application/json'], response: paths['/webhooks/{webhook_id}/{token}/{message_id}']['patch']['responses']['200']['content']['application/json'] }
+| { method: 'patch', path: '-/webhooks/{webhook_id}/{token}/{message_id}', parts: 4, params: paths['/webhooks/{webhook_id}/{token}/{message_id}']['patch']['requestBody']['content']['application/json'], response: paths['/webhooks/{webhook_id}/{token}/{message_id}']['patch']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: `/webhooks/${string}/${string}`, parts: 3, params: undefined, response: paths['/webhooks/{webhook_id}/{token}']['get']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: '-/webhooks/{webhook_id}/{token}', parts: 3, params: undefined, response: paths['/webhooks/{webhook_id}/{token}']['get']['responses']['200']['content']['application/json'] }
 | { method: 'post', path: `/webhooks/${string}/${string}`, parts: 3, params: paths['/webhooks/{webhook_id}/{token}']['post']['requestBody']['content']['application/json'], response: paths['/webhooks/{webhook_id}/{token}']['post']['responses']['200']['content']['application/json'] }

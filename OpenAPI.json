@@ -1,13 +1,13 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Revolt API",
+    "title": "Stoat API",
     "description": "Open source user-first chat platform.",
-    "termsOfService": "https://revolt.chat/terms",
+    "termsOfService": "https://stoat.chat/terms",
     "contact": {
-      "name": "Revolt Support",
-      "url": "https://revolt.chat",
-      "email": "contact@revolt.chat"
+      "name": "Stoat",
+      "url": "https://stoat.chat",
+      "email": "contact@stoat.chat"
     },
     "license": {
       "name": "AGPLv3",
@@ -17,20 +17,12 @@
   },
   "servers": [
     {
-      "url": "https://api.revolt.chat",
-      "description": "Revolt Production"
+      "url": "https://api.stoat.chat",
+      "description": "Stoat Production"
     },
     {
-      "url": "https://revolt.chat/api",
-      "description": "Revolt Staging"
-    },
-    {
-      "url": "http://local.revolt.chat:14702",
-      "description": "Local Revolt Environment"
-    },
-    {
-      "url": "http://local.revolt.chat:14702/0.8",
-      "description": "Local Revolt Environment (v0.8)"
+      "url": "https://beta.stoat.chat/api",
+      "description": "Stoat Beta"
     }
   ],
   "paths": {
@@ -2756,9 +2748,6 @@
             "Session Token": []
           },
           {
-            "Session Token": []
-          },
-          {
             "Valid MFA Ticket": []
           }
         ]
@@ -4412,6 +4401,9 @@
         "security": [
           {
             "Session Token": []
+          },
+          {
+            "Valid MFA Ticket": []
           }
         ]
       }
@@ -4452,6 +4444,9 @@
         "security": [
           {
             "Session Token": []
+          },
+          {
+            "Valid MFA Ticket": []
           }
         ]
       }
@@ -4711,6 +4706,9 @@
         },
         "security": [
           {
+            "Valid MFA Ticket": []
+          },
+          {
             "Session Token": []
           },
           {
@@ -4753,6 +4751,9 @@
           }
         },
         "security": [
+          {
+            "Valid MFA Ticket": []
+          },
           {
             "Session Token": []
           }
@@ -7432,6 +7433,38 @@
               "type": {
                 "type": "string",
                 "enum": [
+                  "OperationFailed"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "with"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "IncorrectData"
+                ]
+              },
+              "with": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
                   "LiveKitUnavailable"
                 ]
               }
@@ -7614,6 +7647,216 @@
                 "type": "string"
               }
             }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "RenderFail"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "MissingHeaders"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "CaptchaFailed"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "BlockedByShield"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "UnverifiedAccount"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "EmailFailed"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "InvalidToken"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "MissingInvite"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "InvalidInvite"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "CompromisedPassword"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ShortPassword"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "Blacklisted"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "LockedOut"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "TotpAlreadyEnabled"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "DisallowedMFAMethod"
+                ]
+              }
+            }
           }
         ],
         "required": [
@@ -7651,6 +7894,11 @@
           },
           "display_name": {
             "description": "Display name",
+            "type": "string",
+            "nullable": true
+          },
+          "pronouns": {
+            "description": "User's pronouns",
             "type": "string",
             "nullable": true
           },
@@ -8085,6 +8333,13 @@
             "pattern": "^[^\\u200B\\n\\r]+$",
             "nullable": true
           },
+          "pronouns": {
+            "description": "New pronouns",
+            "type": "string",
+            "maxLength": 24,
+            "minLength": 1,
+            "nullable": true
+          },
           "avatar": {
             "description": "Attachment Id for avatar",
             "type": "string",
@@ -8163,7 +8418,8 @@
               "StatusPresence",
               "ProfileContent",
               "ProfileBackground",
-              "DisplayName"
+              "DisplayName",
+              "Pronouns"
             ]
           },
           {
@@ -9130,6 +9386,11 @@
           },
           "nickname": {
             "description": "Member's nickname",
+            "type": "string",
+            "nullable": true
+          },
+          "pronouns": {
+            "description": "Member's pronouns",
             "type": "string",
             "nullable": true
           },
@@ -11185,6 +11446,13 @@
             "minLength": 1,
             "nullable": true
           },
+          "pronouns": {
+            "description": "Member pronouns",
+            "type": "string",
+            "maxLength": 24,
+            "minLength": 1,
+            "nullable": true
+          },
           "avatar": {
             "description": "Attachment Id to set for avatar",
             "type": "string",
@@ -11237,6 +11505,7 @@
         "type": "string",
         "enum": [
           "Nickname",
+          "Pronouns",
           "Avatar",
           "Roles",
           "Timeout",
@@ -12122,331 +12391,6 @@
           }
         ]
       },
-      "Authifier Error": {
-        "title": "Error",
-        "oneOf": [
-          {
-            "type": "object",
-            "required": [
-              "type",
-              "with"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "IncorrectData"
-                ]
-              },
-              "with": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "operation",
-              "type",
-              "with"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "DatabaseError"
-                ]
-              },
-              "operation": {
-                "type": "string"
-              },
-              "with": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "InternalError"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "OperationFailed"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "RenderFail"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "MissingHeaders"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "CaptchaFailed"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "BlockedByShield"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "InvalidSession"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "UnverifiedAccount"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "UnknownUser"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "EmailFailed"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "InvalidToken"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "MissingInvite"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "InvalidInvite"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "InvalidCredentials"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "CompromisedPassword"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "ShortPassword"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "Blacklisted"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "LockedOut"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "TotpAlreadyEnabled"
-                ]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "DisallowedMFAMethod"
-                ]
-              }
-            }
-          }
-        ]
-      },
       "DataCreateAccount": {
         "title": "Account Data",
         "type": "object",
@@ -12540,7 +12484,7 @@
         }
       },
       "DataChangeEmail": {
-        "title": "Change Data",
+        "title": "Change Email Data",
         "type": "object",
         "required": [
           "current_password",
@@ -12581,7 +12525,6 @@
         ]
       },
       "MFATicket": {
-        "description": "Multi-factor auth ticket",
         "type": "object",
         "required": [
           "_id",
@@ -12662,7 +12605,6 @@
       "ResponseLogin": {
         "oneOf": [
           {
-            "description": "Session information",
             "type": "object",
             "required": [
               "_id",
@@ -12696,11 +12638,15 @@
                 "type": "string"
               },
               "last_seen": {
-                "description": "When the session was last logged in (iso8601 timestamp)",
-                "type": "string"
+                "description": "When the session was last logged in",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ISO8601 Timestamp"
+                  }
+                ]
               },
               "origin": {
-                "description": "What is the session origin? This could be used to differentiate sessions that come from staging/test vs prod, etc. Authifier will set this to None by default. The application must fill it in.",
+                "description": "Where the session is originating from",
                 "type": "string",
                 "nullable": true
               },
@@ -12781,7 +12727,6 @@
         }
       },
       "MFAMethod": {
-        "description": "MFA method",
         "type": "string",
         "enum": [
           "Password",
@@ -12910,14 +12855,6 @@
       },
       "MultiFactorStatus": {
         "type": "object",
-        "required": [
-          "email_mfa",
-          "email_otp",
-          "recovery_active",
-          "security_key_mfa",
-          "totp_mfa",
-          "trusted_handover"
-        ],
         "properties": {
           "email_otp": {
             "type": "boolean"
@@ -13143,16 +13080,16 @@
     }
   },
   "externalDocs": {
-    "description": "Revolt Developer Documentation",
-    "url": "https://developers.revolt.chat"
+    "description": "Stoat Developer Documentation",
+    "url": "https://developers.stoat.chat"
   },
   "x-logo": {
-    "url": "https://revolt.chat/header.png",
-    "altText": "Revolt Header"
+    "url": "https://stoat.chat/header.png",
+    "altText": "Stoat Header"
   },
   "x-tagGroups": [
     {
-      "name": "Revolt",
+      "name": "Stoat",
       "tags": [
         "Core"
       ]

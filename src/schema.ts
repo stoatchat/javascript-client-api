@@ -940,6 +940,15 @@ export interface components {
         }
       | {
           /** @enum {string} */
+          type: "OperationFailed";
+        }
+      | {
+          /** @enum {string} */
+          type: "IncorrectData";
+          with: string;
+        }
+      | {
+          /** @enum {string} */
           type: "LiveKitUnavailable";
         }
       | {
@@ -993,6 +1002,66 @@ export interface components {
           type: "FeatureDisabled";
           feature: string;
         }
+      | {
+          /** @enum {string} */
+          type: "RenderFail";
+        }
+      | {
+          /** @enum {string} */
+          type: "MissingHeaders";
+        }
+      | {
+          /** @enum {string} */
+          type: "CaptchaFailed";
+        }
+      | {
+          /** @enum {string} */
+          type: "BlockedByShield";
+        }
+      | {
+          /** @enum {string} */
+          type: "UnverifiedAccount";
+        }
+      | {
+          /** @enum {string} */
+          type: "EmailFailed";
+        }
+      | {
+          /** @enum {string} */
+          type: "InvalidToken";
+        }
+      | {
+          /** @enum {string} */
+          type: "MissingInvite";
+        }
+      | {
+          /** @enum {string} */
+          type: "InvalidInvite";
+        }
+      | {
+          /** @enum {string} */
+          type: "CompromisedPassword";
+        }
+      | {
+          /** @enum {string} */
+          type: "ShortPassword";
+        }
+      | {
+          /** @enum {string} */
+          type: "Blacklisted";
+        }
+      | {
+          /** @enum {string} */
+          type: "LockedOut";
+        }
+      | {
+          /** @enum {string} */
+          type: "TotpAlreadyEnabled";
+        }
+      | {
+          /** @enum {string} */
+          type: "DisallowedMFAMethod";
+        }
     ) & {
       /** @description Where this error occurred */
       location: string;
@@ -1007,6 +1076,8 @@ export interface components {
       discriminator: string;
       /** @description Display name */
       display_name?: string | null;
+      /** @description User's pronouns */
+      pronouns?: string | null;
       /** @description Avatar attachment */
       avatar?: components["schemas"]["File"] | null;
       /** @description Relationships with other users */
@@ -1138,6 +1209,8 @@ export interface components {
     DataEditUser: {
       /** @description New display name */
       display_name?: string | null;
+      /** @description New pronouns */
+      pronouns?: string | null;
       /** @description Attachment Id for avatar */
       avatar?: string | null;
       /** @description New user status */
@@ -1180,6 +1253,7 @@ export interface components {
           | "ProfileContent"
           | "ProfileBackground"
           | "DisplayName"
+          | "Pronouns"
         )
       | "Internal";
     /** Username Information */
@@ -1549,6 +1623,8 @@ export interface components {
       joined_at: components["schemas"]["ISO8601 Timestamp"];
       /** @description Member's nickname */
       nickname?: string | null;
+      /** @description Member's pronouns */
+      pronouns?: string | null;
       /** @description Avatar attachment */
       avatar?: components["schemas"]["File"] | null;
       /** @description Member's roles */
@@ -2295,6 +2371,8 @@ export interface components {
     DataMemberEdit: {
       /** @description Member nickname */
       nickname?: string | null;
+      /** @description Member pronouns */
+      pronouns?: string | null;
       /** @description Attachment Id to set for avatar */
       avatar?: string | null;
       /** @description Array of role ids */
@@ -2319,6 +2397,7 @@ export interface components {
      */
     FieldsMember:
       | "Nickname"
+      | "Pronouns"
       | "Avatar"
       | "Roles"
       | "Timeout"
@@ -2611,99 +2690,6 @@ export interface components {
       | "Impersonation"
       | "BanEvasion"
       | "Underage";
-    /** Error */
-    "Authifier Error":
-      | {
-          /** @enum {string} */
-          type: "IncorrectData";
-          with: string;
-        }
-      | {
-          /** @enum {string} */
-          type: "DatabaseError";
-          operation: string;
-          with: string;
-        }
-      | {
-          /** @enum {string} */
-          type: "InternalError";
-        }
-      | {
-          /** @enum {string} */
-          type: "OperationFailed";
-        }
-      | {
-          /** @enum {string} */
-          type: "RenderFail";
-        }
-      | {
-          /** @enum {string} */
-          type: "MissingHeaders";
-        }
-      | {
-          /** @enum {string} */
-          type: "CaptchaFailed";
-        }
-      | {
-          /** @enum {string} */
-          type: "BlockedByShield";
-        }
-      | {
-          /** @enum {string} */
-          type: "InvalidSession";
-        }
-      | {
-          /** @enum {string} */
-          type: "UnverifiedAccount";
-        }
-      | {
-          /** @enum {string} */
-          type: "UnknownUser";
-        }
-      | {
-          /** @enum {string} */
-          type: "EmailFailed";
-        }
-      | {
-          /** @enum {string} */
-          type: "InvalidToken";
-        }
-      | {
-          /** @enum {string} */
-          type: "MissingInvite";
-        }
-      | {
-          /** @enum {string} */
-          type: "InvalidInvite";
-        }
-      | {
-          /** @enum {string} */
-          type: "InvalidCredentials";
-        }
-      | {
-          /** @enum {string} */
-          type: "CompromisedPassword";
-        }
-      | {
-          /** @enum {string} */
-          type: "ShortPassword";
-        }
-      | {
-          /** @enum {string} */
-          type: "Blacklisted";
-        }
-      | {
-          /** @enum {string} */
-          type: "LockedOut";
-        }
-      | {
-          /** @enum {string} */
-          type: "TotpAlreadyEnabled";
-        }
-      | {
-          /** @enum {string} */
-          type: "DisallowedMFAMethod";
-        };
     /** Account Data */
     DataCreateAccount: {
       /** @description Valid email address */
@@ -2738,7 +2724,7 @@ export interface components {
       /** @description Current password */
       current_password: string;
     };
-    /** Change Data */
+    /** Change Email Data */
     DataChangeEmail: {
       /** @description Valid email address */
       email: string;
@@ -2751,7 +2737,6 @@ export interface components {
           /** @description Authorised MFA ticket, can be used to log in */
           ticket: components["schemas"]["MFATicket"];
         };
-    /** @description Multi-factor auth ticket */
     MFATicket: {
       /** @description Unique Id */
       _id: string;
@@ -2797,9 +2782,9 @@ export interface components {
           token: string;
           /** @description Display name */
           name: string;
-          /** @description When the session was last logged in (iso8601 timestamp) */
-          last_seen: string;
-          /** @description What is the session origin? This could be used to differentiate sessions that come from staging/test vs prod, etc. Authifier will set this to None by default. The application must fill it in. */
+          /** @description When the session was last logged in */
+          last_seen: components["schemas"]["ISO8601 Timestamp"];
+          /** @description Where the session is originating from */
           origin?: string | null;
           /** @description Web Push subscription */
           subscription?: components["schemas"]["WebPushSubscription"] | null;
@@ -2821,10 +2806,7 @@ export interface components {
       p256dh: string;
       auth: string;
     };
-    /**
-     * @description MFA method
-     * @enum {string}
-     */
+    /** @enum {string} */
     MFAMethod: "Password" | "Recovery" | "Totp";
     /** Login Data */
     DataLogin:
@@ -2873,12 +2855,12 @@ export interface components {
       friendly_name: string;
     };
     MultiFactorStatus: {
-      email_otp: boolean;
-      trusted_handover: boolean;
-      email_mfa: boolean;
-      totp_mfa: boolean;
-      security_key_mfa: boolean;
-      recovery_active: boolean;
+      email_otp?: boolean;
+      trusted_handover?: boolean;
+      email_mfa?: boolean;
+      totp_mfa?: boolean;
+      security_key_mfa?: boolean;
+      recovery_active?: boolean;
     };
     /** Totp Secret */
     ResponseTotpSecret: {

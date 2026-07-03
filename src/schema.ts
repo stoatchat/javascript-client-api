@@ -1542,7 +1542,12 @@ export interface components {
      * @description Optional fields on channel object
      * @enum {string}
      */
-    FieldsChannel: "Description" | "Icon" | "DefaultPermissions" | "Voice";
+    FieldsChannel:
+      | "Description"
+      | "Icon"
+      | "DefaultPermissions"
+      | "Voice"
+      | "Slowmode";
     /** @description Invite */
     Invite:
       | {

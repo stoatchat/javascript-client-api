@@ -9130,7 +9130,8 @@
           "Description",
           "Icon",
           "DefaultPermissions",
-          "Voice"
+          "Voice",
+          "Slowmode"
         ]
       },
       "Invite": {

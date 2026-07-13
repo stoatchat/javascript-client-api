@@ -1172,6 +1172,14 @@
               "type": "boolean",
               "nullable": true
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1209,6 +1217,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -1316,6 +1332,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -1608,6 +1632,14 @@
             "schema": {
               "$ref": "#/components/schemas/Id"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1653,6 +1685,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -1754,6 +1794,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -1857,6 +1905,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -2162,6 +2218,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -2218,6 +2282,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -2502,6 +2574,14 @@
             "schema": {
               "$ref": "#/components/schemas/Id"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -2709,6 +2789,14 @@
             "schema": {
               "$ref": "#/components/schemas/Id"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -2808,6 +2896,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -2992,6 +3088,14 @@
             "schema": {
               "$ref": "#/components/schemas/Id"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3037,6 +3141,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -3170,6 +3282,14 @@
             "schema": {
               "$ref": "#/components/schemas/Id"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -3232,6 +3352,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -3370,6 +3498,14 @@
             "schema": {
               "$ref": "#/components/schemas/Id"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -3488,6 +3624,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3531,6 +3675,14 @@
             "name": "role_id",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
             "schema": {
               "type": "string"
             }
@@ -3599,6 +3751,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -3655,6 +3815,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -3763,6 +3931,14 @@
             "schema": {
               "$ref": "#/components/schemas/Id"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -3792,6 +3968,127 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Server"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Session Token": []
+          }
+        ]
+      }
+    },
+    "/servers/{target}/audit_logs": {
+      "get": {
+        "tags": [
+          "Audit Logs"
+        ],
+        "summary": "Audit Log Query",
+        "description": "Queries a server's audit logs.",
+        "operationId": "audit_log_query_query",
+        "parameters": [
+          {
+            "name": "target",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "Filter by who ran the action",
+            "schema": {
+              "description": "Filter by who ran the action",
+              "type": "string",
+              "maxLength": 26,
+              "minLength": 26,
+              "nullable": true
+            }
+          },
+          {
+            "name": "target",
+            "in": "query",
+            "description": "Filter by who the action is targetting",
+            "schema": {
+              "description": "Filter by who the action is targetting",
+              "type": "string",
+              "maxLength": 26,
+              "minLength": 26,
+              "nullable": true
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Filter by the action type",
+            "schema": {
+              "description": "Filter by the action type",
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "description": "Entries before a certain entry id",
+            "schema": {
+              "description": "Entries before a certain entry id",
+              "type": "string",
+              "maxLength": 26,
+              "minLength": 26,
+              "nullable": true
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "Entries after a certain entry id",
+            "schema": {
+              "description": "Entries after a certain entry id",
+              "type": "string",
+              "maxLength": 26,
+              "minLength": 26,
+              "nullable": true
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of entries to fetch",
+            "schema": {
+              "description": "Maximum number of entries to fetch",
+              "type": "integer",
+              "format": "int64",
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditLogQueryResponse"
                 }
               }
             }
@@ -3905,6 +4202,14 @@
             "schema": {
               "$ref": "#/components/schemas/Id"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3985,6 +4290,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -4040,6 +4353,14 @@
             "schema": {
               "$ref": "#/components/schemas/Id"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4077,6 +4398,14 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Id"
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -5855,6 +6184,14 @@
             "schema": {
               "$ref": "#/components/schemas/Id"
             }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -7421,6 +7758,20 @@
               },
               "error": {
                 "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "HeaderTooLarge"
+                ]
               }
             }
           },
@@ -11857,6 +12208,918 @@
             "items": {
               "type": "string"
             }
+          }
+        }
+      },
+      "AuditLogQueryResponse": {
+        "description": "Response containing the audit log entries and the users involved",
+        "type": "object",
+        "required": [
+          "audit_logs",
+          "members",
+          "users"
+        ],
+        "properties": {
+          "audit_logs": {
+            "description": "List of audit logs",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditLogEntry"
+            }
+          },
+          "users": {
+            "description": "List of users",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "members": {
+            "description": "List of members",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Member"
+            }
+          }
+        }
+      },
+      "AuditLogEntry": {
+        "description": "Audit log entry",
+        "type": "object",
+        "required": [
+          "_id",
+          "action",
+          "server",
+          "user"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Unique ID",
+            "type": "string"
+          },
+          "server": {
+            "description": "The server the entry happened in",
+            "type": "string"
+          },
+          "reason": {
+            "description": "User provided reason",
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "description": "User who ran the action",
+            "type": "string"
+          },
+          "target": {
+            "description": "User this action is targetting",
+            "type": "string",
+            "nullable": true
+          },
+          "action": {
+            "description": "The action ran",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuditLogEntryAction"
+              }
+            ]
+          }
+        }
+      },
+      "AuditLogEntryAction": {
+        "description": "Indivual action stored on the audit log",
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "author",
+              "channel",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "MessageDelete"
+                ]
+              },
+              "author": {
+                "type": "string"
+              },
+              "channel": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "channel",
+              "count",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "MessageBulkDelete"
+                ]
+              },
+              "channel": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer",
+                "format": "uint",
+                "minimum": 0.0
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "author",
+              "channel",
+              "message",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "MessagePin"
+                ]
+              },
+              "message": {
+                "type": "string"
+              },
+              "author": {
+                "type": "string"
+              },
+              "channel": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "author",
+              "channel",
+              "message",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "MessageUnpin"
+                ]
+              },
+              "message": {
+                "type": "string"
+              },
+              "author": {
+                "type": "string"
+              },
+              "channel": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "user"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "BanCreate"
+                ]
+              },
+              "user": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "user"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "BanDelete"
+                ]
+              },
+              "user": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "channel",
+              "name",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ChannelCreate"
+                ]
+              },
+              "channel": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "after",
+              "before",
+              "channel",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ChannelEdit"
+                ]
+              },
+              "channel": {
+                "type": "string"
+              },
+              "before": {
+                "$ref": "#/components/schemas/PartialChannel"
+              },
+              "after": {
+                "$ref": "#/components/schemas/PartialChannel"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "channel",
+              "permissions",
+              "role",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ChannelRolePermissionsEdit"
+                ]
+              },
+              "channel": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "permissions": {
+                "$ref": "#/components/schemas/Override"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "channel",
+              "name",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ChannelDelete"
+                ]
+              },
+              "channel": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "after",
+              "before",
+              "type",
+              "user"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "MemberEdit"
+                ]
+              },
+              "user": {
+                "type": "string"
+              },
+              "before": {
+                "$ref": "#/components/schemas/PartialMember"
+              },
+              "after": {
+                "$ref": "#/components/schemas/PartialMember"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "user"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "MemberKick"
+                ]
+              },
+              "user": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "after",
+              "before",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ServerEdit"
+                ]
+              },
+              "before": {
+                "$ref": "#/components/schemas/PartialServer"
+              },
+              "after": {
+                "$ref": "#/components/schemas/PartialServer"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "after",
+              "before",
+              "role",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "RoleEdit"
+                ]
+              },
+              "role": {
+                "type": "string"
+              },
+              "before": {
+                "$ref": "#/components/schemas/PartialRole"
+              },
+              "after": {
+                "$ref": "#/components/schemas/PartialRole"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "name",
+              "role",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "RoleCreate"
+                ]
+              },
+              "role": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "name",
+              "role",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "RoleDelete"
+                ]
+              },
+              "role": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "after",
+              "before",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "RolesReorder"
+                ]
+              },
+              "before": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "after": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "channel",
+              "invite",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "InviteCreate"
+                ]
+              },
+              "invite": {
+                "type": "string"
+              },
+              "channel": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "channel",
+              "invite",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "InviteDelete"
+                ]
+              },
+              "invite": {
+                "type": "string"
+              },
+              "channel": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "channel",
+              "name",
+              "type",
+              "webhook"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "WebhookCreate"
+                ]
+              },
+              "webhook": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "channel": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "channel",
+              "name",
+              "type",
+              "webhook"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "WebhookDelete"
+                ]
+              },
+              "webhook": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "channel": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "emoji",
+              "name",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "EmojiCreate"
+                ]
+              },
+              "emoji": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "after",
+              "before",
+              "emoji",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "EmojiUpdate"
+                ]
+              },
+              "emoji": {
+                "type": "string"
+              },
+              "before": {
+                "$ref": "#/components/schemas/PartialEmoji"
+              },
+              "after": {
+                "$ref": "#/components/schemas/PartialEmoji"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "emoji",
+              "name",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "EmojiDelete"
+                ]
+              },
+              "emoji": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "PartialChannel": {
+        "description": "Partial representation of a channel",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/File"
+              }
+            ],
+            "nullable": true
+          },
+          "nsfw": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "permissions": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "role_permissions": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/OverrideField"
+            },
+            "nullable": true
+          },
+          "default_permissions": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OverrideField"
+              }
+            ],
+            "nullable": true
+          },
+          "last_message_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "voice": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VoiceInformation"
+              }
+            ],
+            "nullable": true
+          },
+          "slowmode": {
+            "type": "integer",
+            "format": "uint64",
+            "minimum": 0.0,
+            "nullable": true
+          }
+        }
+      },
+      "PartialMember": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MemberCompositeKey"
+              }
+            ],
+            "nullable": true
+          },
+          "joined_at": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISO8601 Timestamp"
+              }
+            ],
+            "nullable": true
+          },
+          "nickname": {
+            "type": "string",
+            "nullable": true
+          },
+          "pronouns": {
+            "type": "string",
+            "nullable": true
+          },
+          "avatar": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/File"
+              }
+            ],
+            "nullable": true
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "timeout": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISO8601 Timestamp"
+              }
+            ],
+            "nullable": true
+          },
+          "can_publish": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "can_receive": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "PartialServer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "channels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Category"
+            },
+            "nullable": true
+          },
+          "system_messages": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SystemMessageChannels"
+              }
+            ],
+            "nullable": true
+          },
+          "roles": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Role"
+            },
+            "nullable": true
+          },
+          "default_permissions": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "icon": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/File"
+              }
+            ],
+            "nullable": true
+          },
+          "banner": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/File"
+              }
+            ],
+            "nullable": true
+          },
+          "flags": {
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0.0,
+            "nullable": true
+          },
+          "nsfw": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "analytics": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "discoverable": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "PartialRole": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "permissions": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OverrideField"
+              }
+            ],
+            "nullable": true
+          },
+          "colour": {
+            "type": "string",
+            "nullable": true
+          },
+          "hoist": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "rank": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "icon": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/File"
+              }
+            ],
+            "nullable": true
+          }
+        }
+      },
+      "PartialEmoji": {
+        "description": "Partial emoji representation",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
           }
         }
       },

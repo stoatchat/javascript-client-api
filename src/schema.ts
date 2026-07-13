@@ -290,6 +290,10 @@ export interface paths {
     /** Edit's server role's ranks. */
     patch: operations["roles_edit_positions_edit_role_ranks"];
   };
+  "/servers/{target}/audit_logs": {
+    /** Queries a server's audit logs. */
+    get: operations["audit_log_query_query"];
+  };
   "/invites/{target}": {
     /** Fetch an invite by its id. */
     get: operations["invite_fetch_fetch"];
@@ -937,6 +941,10 @@ export interface components {
           /** @enum {string} */
           type: "FailedValidation";
           error: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "HeaderTooLarge";
         }
       | {
           /** @enum {string} */
@@ -2545,6 +2553,246 @@ export interface components {
     DataEditRoleRanks: {
       ranks: string[];
     };
+    /** @description Response containing the audit log entries and the users involved */
+    AuditLogQueryResponse: {
+      /** @description List of audit logs */
+      audit_logs: components["schemas"]["AuditLogEntry"][];
+      /** @description List of users */
+      users: components["schemas"]["User"][];
+      /** @description List of members */
+      members: components["schemas"]["Member"][];
+    };
+    /** @description Audit log entry */
+    AuditLogEntry: {
+      /** @description Unique ID */
+      _id: string;
+      /** @description The server the entry happened in */
+      server: string;
+      /** @description User provided reason */
+      reason?: string | null;
+      /** @description User who ran the action */
+      user: string;
+      /** @description User this action is targetting */
+      target?: string | null;
+      /** @description The action ran */
+      action: components["schemas"]["AuditLogEntryAction"];
+    };
+    /** @description Indivual action stored on the audit log */
+    AuditLogEntryAction:
+      | {
+          /** @enum {string} */
+          type: "MessageDelete";
+          author: string;
+          channel: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "MessageBulkDelete";
+          channel: string;
+          /** Format: uint */
+          count: number;
+        }
+      | {
+          /** @enum {string} */
+          type: "MessagePin";
+          message: string;
+          author: string;
+          channel: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "MessageUnpin";
+          message: string;
+          author: string;
+          channel: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "BanCreate";
+          user: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "BanDelete";
+          user: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "ChannelCreate";
+          channel: string;
+          name: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "ChannelEdit";
+          channel: string;
+          before: components["schemas"]["PartialChannel"];
+          after: components["schemas"]["PartialChannel"];
+        }
+      | {
+          /** @enum {string} */
+          type: "ChannelRolePermissionsEdit";
+          channel: string;
+          role: string;
+          permissions: components["schemas"]["Override"];
+        }
+      | {
+          /** @enum {string} */
+          type: "ChannelDelete";
+          channel: string;
+          name: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "MemberEdit";
+          user: string;
+          before: components["schemas"]["PartialMember"];
+          after: components["schemas"]["PartialMember"];
+        }
+      | {
+          /** @enum {string} */
+          type: "MemberKick";
+          user: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "ServerEdit";
+          before: components["schemas"]["PartialServer"];
+          after: components["schemas"]["PartialServer"];
+        }
+      | {
+          /** @enum {string} */
+          type: "RoleEdit";
+          role: string;
+          before: components["schemas"]["PartialRole"];
+          after: components["schemas"]["PartialRole"];
+        }
+      | {
+          /** @enum {string} */
+          type: "RoleCreate";
+          role: string;
+          name: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "RoleDelete";
+          role: string;
+          name: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "RolesReorder";
+          before: string[];
+          after: string[];
+        }
+      | {
+          /** @enum {string} */
+          type: "InviteCreate";
+          invite: string;
+          channel: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "InviteDelete";
+          invite: string;
+          channel: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "WebhookCreate";
+          webhook: string;
+          name: string;
+          channel: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "WebhookDelete";
+          webhook: string;
+          name: string;
+          channel: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "EmojiCreate";
+          emoji: string;
+          name: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "EmojiUpdate";
+          emoji: string;
+          before: components["schemas"]["PartialEmoji"];
+          after: components["schemas"]["PartialEmoji"];
+        }
+      | {
+          /** @enum {string} */
+          type: "EmojiDelete";
+          emoji: string;
+          name: string;
+        };
+    /** @description Partial representation of a channel */
+    PartialChannel: {
+      name?: string | null;
+      owner?: string | null;
+      description?: string | null;
+      icon?: components["schemas"]["File"] | null;
+      nsfw?: boolean | null;
+      active?: boolean | null;
+      /** Format: int64 */
+      permissions?: number | null;
+      role_permissions?: {
+        [key: string]: components["schemas"]["OverrideField"];
+      } | null;
+      default_permissions?: components["schemas"]["OverrideField"] | null;
+      last_message_id?: string | null;
+      voice?: components["schemas"]["VoiceInformation"] | null;
+      /** Format: uint64 */
+      slowmode?: number | null;
+    };
+    PartialMember: {
+      id?: components["schemas"]["MemberCompositeKey"] | null;
+      joined_at?: components["schemas"]["ISO8601 Timestamp"] | null;
+      nickname?: string | null;
+      pronouns?: string | null;
+      avatar?: components["schemas"]["File"] | null;
+      roles?: string[] | null;
+      timeout?: components["schemas"]["ISO8601 Timestamp"] | null;
+      can_publish?: boolean | null;
+      can_receive?: boolean | null;
+    };
+    PartialServer: {
+      id?: string | null;
+      owner?: string | null;
+      name?: string | null;
+      description?: string | null;
+      channels?: string[] | null;
+      categories?: components["schemas"]["Category"][] | null;
+      system_messages?: components["schemas"]["SystemMessageChannels"] | null;
+      roles?: { [key: string]: components["schemas"]["Role"] } | null;
+      /** Format: int64 */
+      default_permissions?: number | null;
+      icon?: components["schemas"]["File"] | null;
+      banner?: components["schemas"]["File"] | null;
+      /** Format: uint32 */
+      flags?: number | null;
+      nsfw?: boolean | null;
+      analytics?: boolean | null;
+      discoverable?: boolean | null;
+    };
+    PartialRole: {
+      id?: string | null;
+      name?: string | null;
+      permissions?: components["schemas"]["OverrideField"] | null;
+      colour?: string | null;
+      hoist?: boolean | null;
+      /** Format: int64 */
+      rank?: number | null;
+      icon?: components["schemas"]["File"] | null;
+    };
+    /** @description Partial emoji representation */
+    PartialEmoji: {
+      name?: string | null;
+    };
     /** @description Public invite response */
     InviteResponse:
       | {
@@ -3469,6 +3717,10 @@ export interface operations {
         /** Whether to not send a leave message */
         leave_silently?: boolean | null;
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       /** Success */
@@ -3486,6 +3738,10 @@ export interface operations {
     parameters: {
       path: {
         target: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -3541,6 +3797,10 @@ export interface operations {
     parameters: {
       path: {
         target: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -3663,6 +3923,10 @@ export interface operations {
         target: components["schemas"]["Id"];
         msg: components["schemas"]["Id"];
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       /** Success */
@@ -3681,6 +3945,10 @@ export interface operations {
       path: {
         target: components["schemas"]["Id"];
         msg: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -3722,6 +3990,10 @@ export interface operations {
       path: {
         target: components["schemas"]["Id"];
         msg: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -3773,6 +4045,10 @@ export interface operations {
     parameters: {
       path: {
         target: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -3906,6 +4182,10 @@ export interface operations {
         target: components["schemas"]["Id"];
         role_id: string;
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       200: {
@@ -3935,6 +4215,10 @@ export interface operations {
     parameters: {
       path: {
         target: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -4056,6 +4340,10 @@ export interface operations {
       path: {
         channel_id: components["schemas"]["Id"];
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       200: {
@@ -4150,6 +4438,10 @@ export interface operations {
       path: {
         target: components["schemas"]["Id"];
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       200: {
@@ -4193,6 +4485,10 @@ export interface operations {
     parameters: {
       path: {
         server: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -4271,6 +4567,10 @@ export interface operations {
         server_id: components["schemas"]["Id"];
         member_id: components["schemas"]["Id"];
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       /** Success */
@@ -4289,6 +4589,10 @@ export interface operations {
       path: {
         server_id: components["schemas"]["Id"];
         member_id: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -4344,6 +4648,10 @@ export interface operations {
         server: components["schemas"]["Id"];
         target: components["schemas"]["Id"];
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       200: {
@@ -4370,6 +4678,10 @@ export interface operations {
       path: {
         server: components["schemas"]["Id"];
         target: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -4431,6 +4743,10 @@ export interface operations {
       path: {
         target: components["schemas"]["Id"];
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       200: {
@@ -4480,6 +4796,10 @@ export interface operations {
         target: components["schemas"]["Id"];
         role_id: string;
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       /** Success */
@@ -4498,6 +4818,10 @@ export interface operations {
       path: {
         target: components["schemas"]["Id"];
         role_id: string;
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -4526,6 +4850,10 @@ export interface operations {
         target: components["schemas"]["Id"];
         role_id: string;
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       200: {
@@ -4551,6 +4879,10 @@ export interface operations {
     parameters: {
       path: {
         target: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -4599,6 +4931,10 @@ export interface operations {
       path: {
         target: components["schemas"]["Id"];
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       200: {
@@ -4616,6 +4952,41 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["DataEditRoleRanks"];
+      };
+    };
+  };
+  /** Queries a server's audit logs. */
+  audit_log_query_query: {
+    parameters: {
+      path: {
+        target: components["schemas"]["Id"];
+      };
+      query: {
+        /** Filter by who ran the action */
+        user?: string | null;
+        /** Filter by who the action is targetting */
+        target?: string | null;
+        /** Filter by the action type */
+        type?: string[] | null;
+        /** Entries before a certain entry id */
+        before?: string | null;
+        /** Entries after a certain entry id */
+        after?: string | null;
+        /** Maximum number of entries to fetch */
+        limit?: number | null;
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["AuditLogQueryResponse"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
       };
     };
   };
@@ -4667,6 +5038,10 @@ export interface operations {
       path: {
         target: components["schemas"]["Id"];
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       /** Success */
@@ -4706,6 +5081,10 @@ export interface operations {
       path: {
         emoji_id: string;
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       200: {
@@ -4732,6 +5111,10 @@ export interface operations {
       path: {
         emoji_id: components["schemas"]["Id"];
       };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
+      };
     };
     responses: {
       /** Success */
@@ -4749,6 +5132,10 @@ export interface operations {
     parameters: {
       path: {
         emoji_id: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {
@@ -5536,6 +5923,10 @@ export interface operations {
     parameters: {
       path: {
         webhook_id: components["schemas"]["Id"];
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {

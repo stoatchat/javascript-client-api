@@ -10382,6 +10382,14 @@
               "id": {
                 "type": "string"
               },
+              "creator_name": {
+                "type": "string",
+                "nullable": true
+              },
+              "creator_url": {
+                "type": "string",
+                "nullable": true
+              },
               "timestamp": {
                 "type": "string",
                 "nullable": true

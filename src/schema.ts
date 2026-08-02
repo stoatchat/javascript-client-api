@@ -1840,6 +1840,8 @@ export interface components {
           /** @enum {string} */
           type: "YouTube";
           id: string;
+          creator_name?: string | null;
+          creator_url?: string | null;
           timestamp?: string | null;
         }
       | {

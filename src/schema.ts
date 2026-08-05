@@ -2207,6 +2207,11 @@ export interface components {
       analytics?: boolean;
       /** @description Whether this server should be publicly discoverable */
       discoverable?: boolean;
+      /**
+       * Format: uint
+       * @description Approximate amount of members in the server
+       */
+      approximate_member_count: number;
     };
     /** @description Channel category */
     Category: {
@@ -2304,6 +2309,11 @@ export interface components {
           analytics?: boolean;
           /** @description Whether this server should be publicly discoverable */
           discoverable?: boolean;
+          /**
+           * Format: uint
+           * @description Approximate amount of members in the server
+           */
+          approximate_member_count: number;
         };
     /** @description New server information */
     DataEditServer: {
@@ -2780,6 +2790,8 @@ export interface components {
       nsfw?: boolean | null;
       analytics?: boolean | null;
       discoverable?: boolean | null;
+      /** Format: uint */
+      approximate_member_count?: number | null;
     };
     PartialRole: {
       id?: string | null;

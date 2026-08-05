@@ -11253,6 +11253,7 @@
         "type": "object",
         "required": [
           "_id",
+          "approximate_member_count",
           "channels",
           "default_permissions",
           "name",
@@ -11347,6 +11348,12 @@
           "discoverable": {
             "description": "Whether this server should be publicly discoverable",
             "type": "boolean"
+          },
+          "approximate_member_count": {
+            "description": "Approximate amount of members in the server",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0.0
           }
         }
       },
@@ -11495,6 +11502,7 @@
             "type": "object",
             "required": [
               "_id",
+              "approximate_member_count",
               "channels",
               "default_permissions",
               "name",
@@ -11589,6 +11597,12 @@
               "discoverable": {
                 "description": "Whether this server should be publicly discoverable",
                 "type": "boolean"
+              },
+              "approximate_member_count": {
+                "description": "Approximate amount of members in the server",
+                "type": "integer",
+                "format": "uint",
+                "minimum": 0.0
               }
             }
           }
@@ -13075,6 +13089,12 @@
           },
           "discoverable": {
             "type": "boolean",
+            "nullable": true
+          },
+          "approximate_member_count": {
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0.0,
             "nullable": true
           }
         }

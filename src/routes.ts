@@ -40,6 +40,12 @@ export type APIRoutes =
 | { method: 'patch', path: `/bots/${string}`, parts: 2, params: paths['/bots/{bot_id}']['patch']['requestBody']['content']['application/json'], response: paths['/bots/{bot_id}']['patch']['responses']['200']['content']['application/json'] }
 | { method: 'patch', path: '-/bots/{bot_id}', parts: 2, params: paths['/bots/{bot_id}']['patch']['requestBody']['content']['application/json'], response: paths['/bots/{bot_id}']['patch']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: `/bots/@me`, parts: 2, params: undefined, response: paths['/bots/@me']['get']['responses']['200']['content']['application/json'] }
+| { method: 'get', path: `/bots/${string}/discover`, parts: 3, params: undefined, response: paths['/bots/{bot_id}/discover']['get']['responses']['200']['content']['application/json'] }
+| { method: 'get', path: '-/bots/{bot_id}/discover', parts: 3, params: undefined, response: paths['/bots/{bot_id}/discover']['get']['responses']['200']['content']['application/json'] }
+| { method: 'put', path: `/bots/${string}/discover`, parts: 3, params: undefined, response: undefined }
+| { method: 'put', path: '-/bots/{bot_id}/discover', parts: 3, params: undefined, response: undefined }
+| { method: 'delete', path: `/bots/${string}/discover`, parts: 3, params: undefined, response: undefined }
+| { method: 'delete', path: '-/bots/{bot_id}/discover', parts: 3, params: undefined, response: undefined }
 | { method: 'put', path: `/channels/${string}/ack/${string}`, parts: 4, params: undefined, response: undefined }
 | { method: 'put', path: '-/channels/{target}/ack/{message}', parts: 4, params: undefined, response: undefined }
 | { method: 'get', path: `/channels/${string}`, parts: 2, params: undefined, response: paths['/channels/{target}']['get']['responses']['200']['content']['application/json'] }
@@ -140,6 +146,12 @@ export type APIRoutes =
 | { method: 'patch', path: '-/servers/{target}/roles/ranks', parts: 4, params: paths['/servers/{target}/roles/ranks']['patch']['requestBody']['content']['application/json'], response: paths['/servers/{target}/roles/ranks']['patch']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: `/servers/${string}/audit_logs`, parts: 3, params: paths['/servers/{target}/audit_logs']['get']['parameters']['query'], response: paths['/servers/{target}/audit_logs']['get']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: '-/servers/{target}/audit_logs', parts: 3, params: paths['/servers/{target}/audit_logs']['get']['parameters']['query'], response: paths['/servers/{target}/audit_logs']['get']['responses']['200']['content']['application/json'] }
+| { method: 'get', path: `/servers/${string}/discover`, parts: 3, params: undefined, response: paths['/servers/{server}/discover']['get']['responses']['200']['content']['application/json'] }
+| { method: 'get', path: '-/servers/{server}/discover', parts: 3, params: undefined, response: paths['/servers/{server}/discover']['get']['responses']['200']['content']['application/json'] }
+| { method: 'put', path: `/servers/${string}/discover`, parts: 3, params: undefined, response: undefined }
+| { method: 'put', path: '-/servers/{server}/discover', parts: 3, params: undefined, response: undefined }
+| { method: 'delete', path: `/servers/${string}/discover`, parts: 3, params: undefined, response: undefined }
+| { method: 'delete', path: '-/servers/{server}/discover', parts: 3, params: undefined, response: undefined }
 | { method: 'get', path: `/invites/${string}`, parts: 2, params: undefined, response: paths['/invites/{target}']['get']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: '-/invites/{target}', parts: 2, params: undefined, response: paths['/invites/{target}']['get']['responses']['200']['content']['application/json'] }
 | { method: 'post', path: `/invites/${string}`, parts: 2, params: undefined, response: paths['/invites/{target}']['post']['responses']['200']['content']['application/json'] }

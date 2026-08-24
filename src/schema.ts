@@ -92,6 +92,14 @@ export interface paths {
     /** Fetch all of the bots that you have control over. */
     get: operations["fetch_owned_fetch_owned_bots"];
   };
+  "/bots/{bot_id}/discover": {
+    /** Fetches the status of your Discover request. If it has been approved or denied, the reason will be provided (if applicable). This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+    get: operations["discover_discover_get_bot_discover_get_bot"];
+    /** This puts your bot into the Discover request queue. This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+    put: operations["discover_discover_add_bot_discover_add_bot"];
+    /** This cannot be used if your request is no longer in the queue (ie approved or rejected). If you wish to reapply after a rejection, submit another POST. This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+    delete: operations["discover_discover_remove_bot_discover_remove_bot"];
+  };
   "/channels/{target}/ack/{message}": {
     /** Lets the server and all other clients know that we've seen this message id in this channel. */
     put: operations["channel_ack_ack"];
@@ -293,6 +301,14 @@ export interface paths {
   "/servers/{target}/audit_logs": {
     /** Queries a server's audit logs. */
     get: operations["audit_log_query_query"];
+  };
+  "/servers/{server}/discover": {
+    /** Fetches the status of your Discover request. If it has been approved or denied, the reason will be provided (if applicable). This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+    get: operations["discover_discover_get_discover_get"];
+    /** This puts your server into the Discover request queue. This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+    put: operations["discover_discover_add_discover_add"];
+    /** This cannot be used if your request is no longer in the queue (ie approved or rejected). If you wish to reapply after a rejection, submit another POST. This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+    delete: operations["discover_discover_remove_discover_remove"];
   };
   "/invites/{target}": {
     /** Fetch an invite by its id. */
@@ -664,6 +680,11 @@ export interface components {
       | {
           /** @enum {string} */
           type: "LabelMe";
+        }
+      | {
+          /** @enum {string} */
+          type: "ContactSupport";
+          msg: string;
         }
       | {
           /** @enum {string} */
@@ -1515,6 +1536,25 @@ export interface components {
      * @enum {string}
      */
     FieldsBot: "Token" | "InteractionsURL";
+    /** @description Discover request */
+    DiscoverRequest: {
+      /** @description The type of request. */
+      type: components["schemas"]["DiscoverRequestType"];
+      /** @description The ID of the bot/server */
+      request_id: string;
+      /** @description status of the request */
+      status: components["schemas"]["DiscoverRequestStatus"];
+    };
+    /** @enum {string} */
+    DiscoverRequestType: "Bot" | "Server";
+    DiscoverRequestStatus:
+      | ("Pending" | "UnderReview")
+      | {
+          Denied: string | null;
+        }
+      | {
+          Approved: string | null;
+        };
     /** @description New webhook information */
     DataEditChannel: {
       /** @description Channel name */
@@ -3681,6 +3721,63 @@ export interface operations {
       };
     };
   };
+  /** Fetches the status of your Discover request. If it has been approved or denied, the reason will be provided (if applicable). This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+  discover_discover_get_bot_discover_get_bot: {
+    parameters: {
+      path: {
+        bot_id: components["schemas"]["Id"];
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["DiscoverRequest"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** This puts your bot into the Discover request queue. This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+  discover_discover_add_bot_discover_add_bot: {
+    parameters: {
+      path: {
+        bot_id: components["schemas"]["Id"];
+      };
+    };
+    responses: {
+      /** Success */
+      204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** This cannot be used if your request is no longer in the queue (ie approved or rejected). If you wish to reapply after a rejection, submit another POST. This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+  discover_discover_remove_bot_discover_remove_bot: {
+    parameters: {
+      path: {
+        bot_id: components["schemas"]["Id"];
+      };
+    };
+    responses: {
+      /** Success */
+      204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
   /** Lets the server and all other clients know that we've seen this message id in this channel. */
   channel_ack_ack: {
     parameters: {
@@ -4996,6 +5093,63 @@ export interface operations {
           "application/json": components["schemas"]["AuditLogQueryResponse"];
         };
       };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Fetches the status of your Discover request. If it has been approved or denied, the reason will be provided (if applicable). This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+  discover_discover_get_discover_get: {
+    parameters: {
+      path: {
+        server: components["schemas"]["Id"];
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["DiscoverRequest"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** This puts your server into the Discover request queue. This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+  discover_discover_add_discover_add: {
+    parameters: {
+      path: {
+        server: components["schemas"]["Id"];
+      };
+    };
+    responses: {
+      /** Success */
+      204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** This cannot be used if your request is no longer in the queue (ie approved or rejected). If you wish to reapply after a rejection, submit another POST. This endpoint is ONLY USEFUL in production on stoat.chat/app . */
+  discover_discover_remove_discover_remove: {
+    parameters: {
+      path: {
+        server: components["schemas"]["Id"];
+      };
+    };
+    responses: {
+      /** Success */
+      204: never;
       /** An error occurred. */
       default: {
         content: {

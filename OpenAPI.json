@@ -9675,7 +9675,7 @@
         "description": "Discover request",
         "type": "object",
         "required": [
-          "request_id",
+          "id",
           "status",
           "type"
         ],
@@ -9688,7 +9688,7 @@
               }
             ]
           },
-          "request_id": {
+          "id": {
             "description": "The ID of the bot/server",
             "type": "string"
           },

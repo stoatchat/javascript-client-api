@@ -1541,7 +1541,7 @@ export interface components {
       /** @description The type of request. */
       type: components["schemas"]["DiscoverRequestType"];
       /** @description The ID of the bot/server */
-      request_id: string;
+      id: string;
       /** @description status of the request */
       status: components["schemas"]["DiscoverRequestStatus"];
     };

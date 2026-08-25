@@ -684,6 +684,7 @@ export interface components {
       | {
           /** @enum {string} */
           type: "ContactSupport";
+          locale: string;
           msg: string;
         }
       | {
@@ -1549,6 +1550,9 @@ export interface components {
     DiscoverRequestType: "Bot" | "Server";
     DiscoverRequestStatus:
       | ("Pending" | "UnderReview")
+      | {
+          Removed: string | null;
+        }
       | {
           Denied: string | null;
         }

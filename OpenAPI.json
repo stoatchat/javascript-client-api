@@ -7048,6 +7048,7 @@
           {
             "type": "object",
             "required": [
+              "locale",
               "msg",
               "type"
             ],
@@ -7057,6 +7058,9 @@
                 "enum": [
                   "ContactSupport"
                 ]
+              },
+              "locale": {
+                "type": "string"
               },
               "msg": {
                 "type": "string"
@@ -9717,6 +9721,19 @@
               "Pending",
               "UnderReview"
             ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "Removed"
+            ],
+            "properties": {
+              "Removed": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "additionalProperties": false
           },
           {
             "type": "object",

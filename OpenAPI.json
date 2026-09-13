@@ -8478,13 +8478,11 @@
             }
           }
         ],
-        "required": [
-          "location"
-        ],
         "properties": {
           "location": {
             "description": "Where this error occurred",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         }
       },

@@ -1094,7 +1094,7 @@ export interface components {
         }
     ) & {
       /** @description Where this error occurred */
-      location: string;
+      location?: string | null;
     };
     /** @description User */
     User: {

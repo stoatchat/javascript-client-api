@@ -6589,19 +6589,22 @@
         "type": "object",
         "required": [
           "app",
-          "build",
           "features",
           "revolt",
+          "stoat",
           "vapid",
           "ws"
         ],
         "properties": {
+          "stoat": {
+            "description": "Stoat API Version",
+            "type": "string"
+          },
           "revolt": {
-            "description": "Revolt API Version",
             "type": "string"
           },
           "features": {
-            "description": "Features enabled on this Revolt node",
+            "description": "Features enabled on this Stoat node",
             "allOf": [
               {
                 "$ref": "#/components/schemas/RevoltFeatures"
@@ -6619,14 +6622,6 @@
           "vapid": {
             "description": "Web Push VAPID public key",
             "type": "string"
-          },
-          "build": {
-            "description": "Build information",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/BuildInformation"
-              }
-            ]
           }
         }
       },
@@ -6988,39 +6983,6 @@
           },
           "guidelines": {
             "description": "Guidelines URL",
-            "type": "string"
-          }
-        }
-      },
-      "BuildInformation": {
-        "title": "Build Information",
-        "type": "object",
-        "required": [
-          "commit_sha",
-          "commit_timestamp",
-          "origin_url",
-          "semver",
-          "timestamp"
-        ],
-        "properties": {
-          "commit_sha": {
-            "description": "Commit Hash",
-            "type": "string"
-          },
-          "commit_timestamp": {
-            "description": "Commit Timestamp",
-            "type": "string"
-          },
-          "semver": {
-            "description": "Git Semver",
-            "type": "string"
-          },
-          "origin_url": {
-            "description": "Git Origin URL",
-            "type": "string"
-          },
-          "timestamp": {
-            "description": "Build Timestamp",
             "type": "string"
           }
         }

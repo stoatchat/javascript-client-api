@@ -492,9 +492,10 @@ export interface components {
   schemas: {
     /** Server Configuration */
     RevoltConfig: {
-      /** @description Revolt API Version */
+      /** @description Stoat API Version */
+      stoat: string;
       revolt: string;
-      /** @description Features enabled on this Revolt node */
+      /** @description Features enabled on this Stoat node */
       features: components["schemas"]["RevoltFeatures"];
       /** @description WebSocket URL */
       ws: string;
@@ -502,8 +503,6 @@ export interface components {
       app: string;
       /** @description Web Push VAPID public key */
       vapid: string;
-      /** @description Build information */
-      build: components["schemas"]["BuildInformation"];
     };
     /** Feature Configuration */
     RevoltFeatures: {
@@ -658,19 +657,6 @@ export interface components {
       privacy_policy: string;
       /** @description Guidelines URL */
       guidelines: string;
-    };
-    /** Build Information */
-    BuildInformation: {
-      /** @description Commit Hash */
-      commit_sha: string;
-      /** @description Commit Timestamp */
-      commit_timestamp: string;
-      /** @description Git Semver */
-      semver: string;
-      /** @description Git Origin URL */
-      origin_url: string;
-      /** @description Build Timestamp */
-      timestamp: string;
     };
     /**
      * Error

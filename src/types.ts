@@ -10,7 +10,6 @@ export type LimitsConfig = components['schemas']['LimitsConfig'];
 export type GlobalLimits = components['schemas']['GlobalLimits'];
 export type UserLimits = components['schemas']['UserLimits'];
 export type LegalLinks = components['schemas']['LegalLinks'];
-export type BuildInformation = components['schemas']['BuildInformation'];
 export type Error = components['schemas']['Error'];
 export type User = components['schemas']['User'];
 export type File = components['schemas']['File'];

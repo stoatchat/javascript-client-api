@@ -31,8 +31,8 @@ export type APIRoutes =
 | { method: 'post', path: `/bots/create`, parts: 2, params: paths['/bots/create']['post']['requestBody']['content']['application/json'], response: paths['/bots/create']['post']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: `/bots/${string}/invite`, parts: 3, params: undefined, response: paths['/bots/{target}/invite']['get']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: '-/bots/{target}/invite', parts: 3, params: undefined, response: paths['/bots/{target}/invite']['get']['responses']['200']['content']['application/json'] }
-| { method: 'post', path: `/bots/${string}/invite`, parts: 3, params: paths['/bots/{target}/invite']['post']['requestBody']['content']['application/json'], response: undefined }
-| { method: 'post', path: '-/bots/{target}/invite', parts: 3, params: paths['/bots/{target}/invite']['post']['requestBody']['content']['application/json'], response: undefined }
+| { method: 'post', path: `/bots/${string}/invite`, parts: 3, params: paths['/bots/{target}/invite']['post']['parameters']['query']|paths['/bots/{target}/invite']['post']['requestBody']['content']['application/json'], response: undefined }
+| { method: 'post', path: '-/bots/{target}/invite', parts: 3, params: paths['/bots/{target}/invite']['post']['parameters']['query']|paths['/bots/{target}/invite']['post']['requestBody']['content']['application/json'], response: undefined }
 | { method: 'get', path: `/bots/${string}`, parts: 2, params: undefined, response: paths['/bots/{bot_id}']['get']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: '-/bots/{bot_id}', parts: 2, params: undefined, response: paths['/bots/{bot_id}']['get']['responses']['200']['content']['application/json'] }
 | { method: 'delete', path: `/bots/${string}`, parts: 2, params: undefined, response: undefined }

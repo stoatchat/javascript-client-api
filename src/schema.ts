@@ -1410,6 +1410,11 @@ export interface components {
       token: string;
       /** @description Whether the bot is public (may be invited by anyone) */
       public: boolean;
+      /**
+       * Format: int64
+       * @description The permissions the bot will ask to have upon being invited to a server,
+       */
+      default_permissions?: number | null;
       /** @description Whether to enable analytics */
       analytics?: boolean;
       /** @description Whether this bot should be publicly discoverable */
@@ -1469,6 +1474,11 @@ export interface components {
       token: string;
       /** @description Whether the bot is public (may be invited by anyone) */
       public: boolean;
+      /**
+       * Format: int64
+       * @description The permissions the bot will ask to have upon being invited to a server,
+       */
+      default_permissions?: number | null;
       /** @description Whether to enable analytics */
       analytics?: boolean;
       /** @description Whether this bot should be publicly discoverable */
@@ -1504,6 +1514,11 @@ export interface components {
       name?: string | null;
       /** @description Whether the bot can be added by anyone */
       public?: boolean | null;
+      /**
+       * Format: int64
+       * @description The permissions the bot will ask to have upon being invited to a server,
+       */
+      default_permissions?: number | null;
       /**
        * @description Whether analytics should be gathered for this bot
        *
@@ -2287,6 +2302,8 @@ export interface components {
       rank?: number;
       /** @description Role icon */
       icon?: components["schemas"]["File"] | null;
+      /** @description Id of the bot that owns this role, if it is a managed role */
+      owner?: string | null;
     };
     /** @description Information about new server to create */
     DataCreateServer: {
@@ -2832,6 +2849,7 @@ export interface components {
       /** Format: int64 */
       rank?: number | null;
       icon?: components["schemas"]["File"] | null;
+      owner?: string | null;
     };
     /** @description Partial emoji representation */
     PartialEmoji: {
@@ -3612,6 +3630,13 @@ export interface operations {
     parameters: {
       path: {
         target: components["schemas"]["Id"];
+      };
+      query: {
+        permissions?: number | null;
+      };
+      header: {
+        /** Reason for action which is stored in the audit log. */
+        "X-Audit-Log-Reason"?: string;
       };
     };
     responses: {

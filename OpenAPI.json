@@ -842,6 +842,23 @@
             "schema": {
               "$ref": "#/components/schemas/Id"
             }
+          },
+          {
+            "name": "permissions",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-Audit-Log-Reason",
+            "in": "header",
+            "description": "Reason for action which is stored in the audit log.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -9383,6 +9400,12 @@
             "description": "Whether the bot is public (may be invited by anyone)",
             "type": "boolean"
           },
+          "default_permissions": {
+            "description": "The permissions the bot will ask to have upon being invited to a server,",
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
           "analytics": {
             "description": "Whether to enable analytics",
             "type": "boolean"
@@ -9536,6 +9559,12 @@
             "description": "Whether the bot is public (may be invited by anyone)",
             "type": "boolean"
           },
+          "default_permissions": {
+            "description": "The permissions the bot will ask to have upon being invited to a server,",
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
           "analytics": {
             "description": "Whether to enable analytics",
             "type": "boolean"
@@ -9603,6 +9632,12 @@
           "public": {
             "description": "Whether the bot can be added by anyone",
             "type": "boolean",
+            "nullable": true
+          },
+          "default_permissions": {
+            "description": "The permissions the bot will ask to have upon being invited to a server,",
+            "type": "integer",
+            "format": "int64",
             "nullable": true
           },
           "analytics": {
@@ -11777,6 +11812,11 @@
               }
             ],
             "nullable": true
+          },
+          "owner": {
+            "description": "Id of the bot that owns this role, if it is a managed role",
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -13453,6 +13493,10 @@
                 "$ref": "#/components/schemas/File"
               }
             ],
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
             "nullable": true
           }
         }

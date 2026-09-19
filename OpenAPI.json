@@ -1483,6 +1483,16 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataCreateInvite"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "default": {
             "description": "An error occurred.",
@@ -6838,6 +6848,7 @@
         "required": [
           "body_limit_size",
           "group_size",
+          "max_invite_duration_days",
           "message_embeds",
           "message_reactions",
           "message_replies",
@@ -6896,6 +6907,11 @@
           },
           "new_user_hours": {
             "description": "New user hours",
+            "type": "integer",
+            "format": "int64"
+          },
+          "max_invite_duration_days": {
+            "description": "Number of days after creation before an invite expires",
             "type": "integer",
             "format": "int64"
           }
@@ -9847,7 +9863,8 @@
               "channel",
               "creator",
               "server",
-              "type"
+              "type",
+              "uses"
             ],
             "properties": {
               "type": {
@@ -9871,6 +9888,28 @@
               "channel": {
                 "description": "Id of the server channel this invite points to",
                 "type": "string"
+              },
+              "max_uses": {
+                "description": "Maximum number of times this invite can be used",
+                "type": "integer",
+                "format": "uint64",
+                "minimum": 0.0,
+                "nullable": true
+              },
+              "uses": {
+                "description": "Number of times this invite has been used",
+                "type": "integer",
+                "format": "uint64",
+                "minimum": 0.0
+              },
+              "expires": {
+                "description": "Timestamp at which this invite expires",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ISO8601 Timestamp"
+                  }
+                ],
+                "nullable": true
               }
             }
           },
@@ -9881,7 +9920,8 @@
               "_id",
               "channel",
               "creator",
-              "type"
+              "type",
+              "uses"
             ],
             "properties": {
               "type": {
@@ -9901,10 +9941,61 @@
               "channel": {
                 "description": "Id of the group channel this invite points to",
                 "type": "string"
+              },
+              "max_uses": {
+                "description": "Maximum number of times this invite can be used",
+                "type": "integer",
+                "format": "uint64",
+                "minimum": 0.0,
+                "nullable": true
+              },
+              "uses": {
+                "description": "Number of times this invite has been used",
+                "type": "integer",
+                "format": "uint64",
+                "minimum": 0.0
+              },
+              "expires": {
+                "description": "Timestamp at which this invite expires",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ISO8601 Timestamp"
+                  }
+                ],
+                "nullable": true
               }
             }
           }
         ]
+      },
+      "ISO8601 Timestamp": {
+        "description": "ISO8601 formatted timestamp",
+        "type": "string",
+        "format": "date-time",
+        "example": "1970-01-01T00:00:00Z"
+      },
+      "DataCreateInvite": {
+        "description": "Create Invite",
+        "type": "object",
+        "properties": {
+          "max_uses": {
+            "description": "Maximum number of times this invite can be used",
+            "type": "integer",
+            "format": "uint64",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "nullable": true
+          },
+          "expires": {
+            "description": "Number of seconds until this invite expires",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISO8601 Timestamp"
+              }
+            ],
+            "nullable": true
+          }
+        }
       },
       "Message": {
         "description": "Message",
@@ -10149,12 +10240,6 @@
             "type": "string"
           }
         }
-      },
-      "ISO8601 Timestamp": {
-        "description": "ISO8601 formatted timestamp",
-        "type": "string",
-        "format": "date-time",
-        "example": "1970-01-01T00:00:00Z"
       },
       "MessageWebhook": {
         "description": "Information about the webhook bundled with Message",

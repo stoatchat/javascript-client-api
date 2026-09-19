@@ -608,6 +608,11 @@ export interface components {
        * @description New user hours
        */
       new_user_hours: number;
+      /**
+       * Format: int64
+       * @description Number of days after creation before an invite expires
+       */
+      max_invite_duration_days: number;
     };
     /** User Limits */
     UserLimits: {
@@ -1614,6 +1619,18 @@ export interface components {
           creator: string;
           /** @description Id of the server channel this invite points to */
           channel: string;
+          /**
+           * Format: uint64
+           * @description Maximum number of times this invite can be used
+           */
+          max_uses?: number | null;
+          /**
+           * Format: uint64
+           * @description Number of times this invite has been used
+           */
+          uses: number;
+          /** @description Timestamp at which this invite expires */
+          expires?: components["schemas"]["ISO8601 Timestamp"] | null;
         }
       | {
           /** @enum {string} */
@@ -1624,7 +1641,35 @@ export interface components {
           creator: string;
           /** @description Id of the group channel this invite points to */
           channel: string;
+          /**
+           * Format: uint64
+           * @description Maximum number of times this invite can be used
+           */
+          max_uses?: number | null;
+          /**
+           * Format: uint64
+           * @description Number of times this invite has been used
+           */
+          uses: number;
+          /** @description Timestamp at which this invite expires */
+          expires?: components["schemas"]["ISO8601 Timestamp"] | null;
         };
+    /**
+     * Format: date-time
+     * @description ISO8601 formatted timestamp
+     * @example 1970-01-01T00:00:00Z
+     */
+    "ISO8601 Timestamp": string;
+    /** @description Create Invite */
+    DataCreateInvite: {
+      /**
+       * Format: uint64
+       * @description Maximum number of times this invite can be used
+       */
+      max_uses?: number | null;
+      /** @description Number of seconds until this invite expires */
+      expires?: components["schemas"]["ISO8601 Timestamp"] | null;
+    };
     /** @description Message */
     Message: {
       /** @description Unique Id */
@@ -1701,12 +1746,6 @@ export interface components {
       /** @description User Id */
       user: string;
     };
-    /**
-     * Format: date-time
-     * @description ISO8601 formatted timestamp
-     * @example 1970-01-01T00:00:00Z
-     */
-    "ISO8601 Timestamp": string;
     /** @description Information about the webhook bundled with Message */
     MessageWebhook: {
       name: string;
@@ -3940,6 +3979,11 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["Error"];
         };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DataCreateInvite"];
       };
     };
   };

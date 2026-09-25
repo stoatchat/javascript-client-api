@@ -522,6 +522,8 @@ export interface components {
       limits: components["schemas"]["LimitsConfig"];
       /** @description Legal links */
       legal_links: components["schemas"]["LegalLinks"];
+      /** @description Asset link */
+      assets: string;
     };
     /** hCaptcha Configuration */
     CaptchaFeature: {

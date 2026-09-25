@@ -6656,6 +6656,7 @@
         "title": "Feature Configuration",
         "type": "object",
         "required": [
+          "assets",
           "autumn",
           "captcha",
           "email",
@@ -6721,6 +6722,10 @@
                 "$ref": "#/components/schemas/LegalLinks"
               }
             ]
+          },
+          "assets": {
+            "description": "Asset link",
+            "type": "string"
           }
         }
       },

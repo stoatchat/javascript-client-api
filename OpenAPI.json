@@ -9525,6 +9525,20 @@
           "description": {
             "description": "Profile Description",
             "type": "string"
+          },
+          "privacy_policy_url": {
+            "description": "URL for privacy policy",
+            "type": "string"
+          },
+          "terms_of_service_url": {
+            "description": "URL for terms of service",
+            "type": "string"
+          },
+          "default_permissions": {
+            "description": "Permissions the bot will ask for",
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
           }
         }
       },

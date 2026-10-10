@@ -1463,6 +1463,15 @@ export interface components {
       avatar?: string;
       /** @description Profile Description */
       description?: string;
+      /** @description URL for privacy policy */
+      privacy_policy_url?: string;
+      /** @description URL for terms of service */
+      terms_of_service_url?: string;
+      /**
+       * Format: int64
+       * @description Permissions the bot will ask for
+       */
+      default_permissions?: number | null;
     };
     /** @description Bot Response */
     FetchBotResponse: {

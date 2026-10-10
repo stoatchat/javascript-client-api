@@ -10898,6 +10898,95 @@
             }
           },
           {
+            "description": "X/Twitter post",
+            "type": "object",
+            "required": [
+              "author_handle",
+              "author_name",
+              "author_url",
+              "created_timestamp",
+              "id",
+              "likes",
+              "replies",
+              "reposts",
+              "text",
+              "type",
+              "views"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "XApp"
+                ]
+              },
+              "id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "author_name": {
+                "type": "string"
+              },
+              "author_handle": {
+                "type": "string"
+              },
+              "author_url": {
+                "type": "string"
+              },
+              "author_avatar_url": {
+                "type": "string",
+                "nullable": true
+              },
+              "created_timestamp": {
+                "type": "integer",
+                "format": "uint",
+                "minimum": 0.0
+              },
+              "quote_id": {
+                "type": "string",
+                "nullable": true
+              },
+              "quote_text": {
+                "type": "string",
+                "nullable": true
+              },
+              "quote_author_handle": {
+                "type": "string",
+                "nullable": true
+              },
+              "quote_author_name": {
+                "type": "string",
+                "nullable": true
+              },
+              "quote_author_url": {
+                "type": "string",
+                "nullable": true
+              },
+              "replies": {
+                "type": "integer",
+                "format": "uint",
+                "minimum": 0.0
+              },
+              "reposts": {
+                "type": "integer",
+                "format": "uint",
+                "minimum": 0.0
+              },
+              "likes": {
+                "type": "integer",
+                "format": "uint",
+                "minimum": 0.0
+              },
+              "views": {
+                "type": "integer",
+                "format": "uint",
+                "minimum": 0.0
+              }
+            }
+          },
+          {
             "description": "Spotify track",
             "type": "object",
             "required": [

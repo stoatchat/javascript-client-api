@@ -1953,6 +1953,31 @@ export interface components {
         }
       | {
           /** @enum {string} */
+          type: "XApp";
+          id: string;
+          text: string;
+          author_name: string;
+          author_handle: string;
+          author_url: string;
+          author_avatar_url?: string | null;
+          /** Format: uint */
+          created_timestamp: number;
+          quote_id?: string | null;
+          quote_text?: string | null;
+          quote_author_handle?: string | null;
+          quote_author_name?: string | null;
+          quote_author_url?: string | null;
+          /** Format: uint */
+          replies: number;
+          /** Format: uint */
+          reposts: number;
+          /** Format: uint */
+          likes: number;
+          /** Format: uint */
+          views: number;
+        }
+      | {
+          /** @enum {string} */
           type: "Spotify";
           content_type: string;
           id: string;

@@ -1490,8 +1490,7 @@
                 "$ref": "#/components/schemas/DataCreateInvite"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "default": {

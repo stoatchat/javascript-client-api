@@ -2002,6 +2002,11 @@ export interface components {
           /** @enum {string} */
           type: "Streamable";
           id: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "Gifbox";
+          poster_url?: string | null;
         };
     /**
      * @description Type of remote Lightspeed.tv content

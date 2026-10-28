@@ -11086,6 +11086,25 @@
                 "type": "string"
               }
             }
+          },
+          {
+            "description": "Gifbox",
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "Gifbox"
+                ]
+              },
+              "poster_url": {
+                "type": "string",
+                "nullable": true
+              }
+            }
           }
         ]
       },

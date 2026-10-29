@@ -1014,6 +1014,10 @@ export interface components {
         }
       | {
           /** @enum {string} */
+          type: "ImageResolutionNotAllowed";
+        }
+      | {
+          /** @enum {string} */
           type: "NoEmbedData";
         }
       | {

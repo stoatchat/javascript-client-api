@@ -8229,6 +8229,20 @@
               "type": {
                 "type": "string",
                 "enum": [
+                  "ImageResolutionNotAllowed"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
                   "NoEmbedData"
                 ]
               }

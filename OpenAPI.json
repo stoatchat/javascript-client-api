@@ -974,6 +974,12 @@
         "security": [
           {
             "Session Token": []
+          },
+          {
+            "Session Token": []
+          },
+          {
+            "Valid MFA Ticket": []
           }
         ]
       },
@@ -2920,6 +2926,12 @@
         "security": [
           {
             "Session Token": []
+          },
+          {
+            "Session Token": []
+          },
+          {
+            "Valid MFA Ticket": []
           }
         ]
       },
@@ -4888,10 +4900,10 @@
         },
         "security": [
           {
-            "Valid MFA Ticket": []
+            "Session Token": []
           },
           {
-            "Session Token": []
+            "Valid MFA Ticket": []
           }
         ]
       }
@@ -4958,10 +4970,10 @@
         },
         "security": [
           {
-            "Valid MFA Ticket": []
+            "Session Token": []
           },
           {
-            "Session Token": []
+            "Valid MFA Ticket": []
           }
         ]
       }

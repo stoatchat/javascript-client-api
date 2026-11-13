@@ -7863,6 +7863,20 @@
           {
             "type": "object",
             "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "CannotRemoveOwnChannelView"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
               "collection",
               "operation",
               "type"

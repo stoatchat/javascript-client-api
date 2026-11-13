@@ -908,6 +908,10 @@ export interface components {
         }
       | {
           /** @enum {string} */
+          type: "CannotRemoveOwnChannelView";
+        }
+      | {
+          /** @enum {string} */
           type: "DatabaseError";
           operation: string;
           collection: string;
